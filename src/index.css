@@ -16,6 +16,7 @@ body {
   padding: 5.3125rem;
   font-family: 'Inter', sans-serif;
   background-color: #e7f6ff;
+  overflow: hidden;
 }
 
 button,
