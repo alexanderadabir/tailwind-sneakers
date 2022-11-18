@@ -68,10 +68,27 @@ export default function App() {
     setPrice(price - product.price)
   }
 
+  const [lastOrders, setLastOrders] = useState(...products)
+
   const actionProductHandler = (product) =>
     !product.addedForPurchase
       ? addProductHandler(product)
       : deleteProductHandler(product)
+
+  const orderSuccessHandler = () => {
+    setProducts([...listProducts])
+    setIsVisibleShoppingCart('invisible')
+    setProductsCart([])
+    setPrice(0)
+    setOrderState(false)
+  }
+
+  const [orderState, setOrderState] = useState(false)
+
+  const changeStateOrderHanlder = (e) => {
+    e.preventDefault()
+    setOrderState(true)
+  }
 
   return (
     <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">
@@ -81,6 +98,9 @@ export default function App() {
         hideShoppingCart={hideShoppingCartHandler}
         price={price}
         actionProduct={actionProductHandler}
+        orderSuccess={orderSuccessHandler}
+        changeStateOrder={changeStateOrderHanlder}
+        orderState={orderState}
       />
       <Header price={price} showShoppingCart={showShoppingCartHandler} />
       <Main

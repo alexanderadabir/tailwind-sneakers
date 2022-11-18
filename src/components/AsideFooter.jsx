@@ -21,6 +21,7 @@ const AsideFooter = ({ price, productsCart }) => {
         text={'Оформить заказ'}
         direction={'right-5'}
         animation={'animate-arrow'}
+        type={'submit'}
       />
     </div>
   )

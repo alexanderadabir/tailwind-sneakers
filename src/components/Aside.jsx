@@ -1,5 +1,8 @@
 import Drawer from './Drawer'
 import AsideFooter from './AsideFooter'
+import { useState } from 'react'
+import OrderMessage from './OrderMessage'
+import Button from './Button'
 
 const Aside = ({
   isVisibleShoppingCart,
@@ -7,6 +10,9 @@ const Aside = ({
   price,
   productsCart,
   actionProduct,
+  orderSuccess,
+  changeStateOrder,
+  orderState,
 }) => {
   return (
     <aside
@@ -14,7 +20,8 @@ const Aside = ({
       id="aside"
       className={`fixed top-0 left-0 z-10 ${isVisibleShoppingCart} h-screen w-full bg-black/50`}
     >
-      <div
+      <form
+        onSubmit={(e) => changeStateOrder(e)}
         className={`absolute top-0 right-0 flex h-full min-w-[400px] ${
           isVisibleShoppingCart === 'visible'
             ? 'animate-rightFromLeft'
@@ -23,14 +30,32 @@ const Aside = ({
       >
         <h2 className="mb-7 text-2xl font-bold">Корзина</h2>
 
-        <Drawer
-          productsCart={productsCart}
-          actionProduct={actionProduct}
-          hideShoppingCart={hideShoppingCart}
-        />
-
-        <AsideFooter price={price} productsCart={productsCart} />
-      </div>
+        {orderState ? (
+          <OrderMessage
+            img={'/img/success-order.png'}
+            title={'Заказ оформлен'}
+            text={`Ваш заказ #${Math.floor(
+              Math.random() * 20
+            )} скоро будет передан курьерской доставке`}
+          >
+            <Button
+              type={'button'}
+              onClick={orderSuccess}
+              text={'Вернуться назад'}
+              direction={'left-12 rotate-180'}
+            />
+          </OrderMessage>
+        ) : (
+          <>
+            <Drawer
+              productsCart={productsCart}
+              actionProduct={actionProduct}
+              hideShoppingCart={hideShoppingCart}
+            />
+            <AsideFooter price={price} productsCart={productsCart} />
+          </>
+        )}
+      </form>
     </aside>
   )
 }

@@ -20,31 +20,37 @@ const Header = ({ showShoppingCart, price }) => {
 
         {/* Header Right */}
         <ul className="flex items-center gap-7">
-          <li
-            onClick={showShoppingCart}
-            className="flex cursor-pointer items-center"
-          >
-            <img
-              className={`${
-                !!price ? '-translate-x-2' : 'translate-x-0'
-              } transition-transform`}
-              width={20}
-              src="/img/cart.svg"
-              alt="Корзина"
-            />
-            <span
-              className={`relative ${
-                !!price ? 'visible animate-price' : 'hidden'
-              } text-sm text-[#5C5C5C] transition-all`}
+          <li>
+            <button
+              className="flex cursor-pointer items-center"
+              onClick={showShoppingCart}
             >
-              {price} ₽
-            </span>
+              <img
+                className={`${
+                  !!price ? '-translate-x-2' : 'translate-x-0'
+                } transition-transform`}
+                width={20}
+                src="/img/cart.svg"
+                alt="Корзина"
+              />
+              <span
+                className={`relative ${
+                  !!price ? 'visible animate-price' : 'hidden'
+                } text-sm text-[#5C5C5C] transition-all`}
+              >
+                {price} ₽
+              </span>
+            </button>
           </li>
           <li className="cursor-pointer">
-            <img width={20} src="/img/favorite.svg" alt="Закладки" />
+            <a href="#" title="Закладки">
+              <img width={20} src="/img/favorite.svg" alt="Закладки" />
+            </a>
           </li>
           <li className="cursor-pointer">
-            <img width={20} src="/img/user.svg" alt="Пользователь" />
+            <a href="#" title="Личный кабинет">
+              <img width={20} src="/img/user.svg" alt="Пользователь" />
+            </a>
           </li>
         </ul>
         {/* ./Header Right */}
