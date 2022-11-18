@@ -1,4 +1,4 @@
-const Header = () => {
+const Header = ({ showShoppingCart, price }) => {
   return (
     <header className="border-b p-10">
       {/* Header Container */}
@@ -20,14 +20,19 @@ const Header = () => {
 
         {/* Header Right */}
         <ul className="flex items-center gap-7">
-          <li className="flex cursor-pointer items-center">
+          <li
+            onClick={showShoppingCart}
+            className="flex cursor-pointer items-center"
+          >
             <img
-              className="mr-2"
-              width={18}
+              className={!!price ? 'mr-2' : 'mr-0'}
+              width={20}
               src="/img/cart.svg"
               alt="Корзина"
             />
-            <span className="text-sm text-[#5C5C5C]">1205 руб.</span>
+            {!!price && (
+              <span className="text-sm text-[#5C5C5C]">{price} ₽</span>
+            )}
           </li>
           <li className="cursor-pointer">
             <img width={20} src="/img/favorite.svg" alt="Закладки" />

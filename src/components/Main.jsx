@@ -1,7 +1,7 @@
 import Cards from './Cards'
 import Search from './Search'
 
-const Main = () => {
+const Main = ({ products, actionProduct }) => {
   return (
     <main className="px-14 py-10">
       <section>
@@ -9,7 +9,7 @@ const Main = () => {
           <h1 className="text-3xl font-bold">Все кроссовки</h1>
           <Search />
         </div>
-        <Cards />
+        <Cards products={products} actionProduct={actionProduct} />
       </section>
     </main>
   )

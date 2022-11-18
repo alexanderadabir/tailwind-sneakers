@@ -1,24 +1,27 @@
-const AsideFooter = () => {
+import Button from './Button'
+
+const AsideFooter = ({ price, productsCart }) => {
+  if (!productsCart.length) {
+    return
+  }
+
   return (
     <div className="flex flex-col gap-5 py-8">
       <div className="flex items-baseline justify-between">
         <p>Итого:</p>
         <span className="relative w-1/2 border-b border-dashed"></span>
-        <b>21 498 руб. </b>
+        <b>{price} ₽</b>
       </div>
       <div className="flex items-baseline justify-between">
         <p>Налог 5%:</p>
-        <span className="relative w-1/2 border-b border-dashed"></span>
-        <b>1074 руб.</b>
+        <span className="relative w-1/2 border-dashed file:border-b"></span>
+        <b>{Math.floor((price / 100) * 5)} ₽</b>
       </div>
-      <button className="relative flex h-14 w-full items-center justify-center rounded-3xl bg-lime-500 font-medium text-white transition-colors duration-300 ease-linear hover:bg-lime-400 active:bg-lime-600">
-        Оформить заказ
-        <img
-          className="absolute right-5 animate-bounce"
-          src="/img/arrow.svg"
-          alt="Arrow right"
-        />
-      </button>
+      <Button
+        text={'Оформить заказ'}
+        direction={'right-5'}
+        animation={'animate-arrow'}
+      />
     </div>
   )
 }
