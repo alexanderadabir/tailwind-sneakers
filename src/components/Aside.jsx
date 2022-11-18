@@ -13,6 +13,7 @@ const Aside = ({
   orderSuccess,
   changeStateOrder,
   orderState,
+  orderNumber,
 }) => {
   return (
     <aside
@@ -35,9 +36,7 @@ const Aside = ({
             img={'/img/success-order.png'}
             title={'Заказ оформлен'}
             titleStyles={'text-lime-500'}
-            text={`Ваш заказ #${Math.floor(
-              Math.random() * 20
-            )} скоро будет передан курьерской доставке`}
+            text={`Ваш заказ #${orderNumber} скоро будет передан курьерской доставке`}
           >
             <Button
               type={'button'}

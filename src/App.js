@@ -68,7 +68,7 @@ export default function App() {
     setPrice(price - product.price)
   }
 
-  const [lastOrders, setLastOrders] = useState(...products)
+  const [lastOrders, setLastOrders] = useState({})
 
   const actionProductHandler = (product) =>
     !product.addedForPurchase
@@ -89,6 +89,11 @@ export default function App() {
   const changeStateOrderHanlder = (e) => {
     e.preventDefault()
     setOrderState(true)
+    const newOrder = {
+      products: [...productsCart],
+      order: Math.floor(Math.random() * 20),
+    }
+    setLastOrders(newOrder)
   }
 
   return (
@@ -102,6 +107,7 @@ export default function App() {
         orderSuccess={orderSuccessHandler}
         changeStateOrder={changeStateOrderHanlder}
         orderState={orderState}
+        orderNumber={lastOrders.order}
       />
       <Header price={price} showShoppingCart={showShoppingCartHandler} />
       <Main
