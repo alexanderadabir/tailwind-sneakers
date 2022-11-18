@@ -20,17 +20,16 @@ const Drawer = ({ productsCart, actionProduct, hideShoppingCart }) => {
           />
         </OrderMessage>
       )}
-      {productsCart.map((product, index) => {
-        if (index < 5) {
-          return (
+      {productsCart.map(
+        (product, index) =>
+          index < 5 && (
             <DrawerItem
               {...product}
               key={product.id}
               actionProduct={actionProduct}
             />
           )
-        }
-      })}
+      )}
     </div>
   )
 }

@@ -44,12 +44,12 @@ const Header = ({ showShoppingCart, lastOrderPrice }) => {
             </button>
           </li>
           <li className="cursor-pointer">
-            <a href="#" title="Закладки">
+            <a href="/" title="Закладки">
               <img width={20} src="/img/favorite.svg" alt="Закладки" />
             </a>
           </li>
           <li className="cursor-pointer">
-            <a href="#" title="Личный кабинет">
+            <a href="/" title="Личный кабинет">
               <img width={20} src="/img/user.svg" alt="Пользователь" />
             </a>
           </li>
