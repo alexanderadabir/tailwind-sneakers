@@ -1,11 +1,12 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import p from './data/products'
+import MainPage from './components/MainPage'
+import NotFound from './components/NotFound'
+import MainLayout from './layouts/MainLayout'
 
-import Aside from './components/Aside'
-import Header from './components/Header'
-import Main from './components/Main'
+import p from './data/products'
 
 const listProducts = p.map((item) => ({
   ...item,
@@ -13,7 +14,7 @@ const listProducts = p.map((item) => ({
   addedForPurchase: false,
 }))
 
-export default function App() {
+const App = () => {
   const [products, setProducts] = useState([...listProducts])
 
   const [searchValue, setSearchValue] = useState('')
@@ -27,20 +28,20 @@ export default function App() {
     setProducts([...searchProduct])
   }
 
-  const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
-    useState('invisible')
+  const [price, setPrice] = useState(0)
 
   const showShoppingCartHandler = () => {
     setIsVisibleShoppingCart('visible')
   }
+
+  const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
+    useState('invisible')
 
   const hideShoppingCartHandler = () => {
     setIsVisibleShoppingCart('invisible')
   }
 
   const [productsCart, setProductsCart] = useState([])
-
-  const [price, setPrice] = useState(0)
 
   const addProductHandler = (product) => {
     setProductsCart([...productsCart, { ...product, addedForPurchase: true }])
@@ -92,30 +93,49 @@ export default function App() {
     const newOrder = {
       products: [...productsCart],
       order: Math.floor(Math.random() * 20),
+      price,
     }
     setLastOrders(newOrder)
   }
-
   return (
-    <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">
-      <Aside
-        productsCart={productsCart}
-        isVisibleShoppingCart={isVisibleShoppingCart}
-        hideShoppingCart={hideShoppingCartHandler}
-        price={price}
-        actionProduct={actionProductHandler}
-        orderSuccess={orderSuccessHandler}
-        changeStateOrder={changeStateOrderHanlder}
-        orderState={orderState}
-        orderNumber={lastOrders.order}
-      />
-      <Header price={price} showShoppingCart={showShoppingCartHandler} />
-      <Main
-        searchValue={searchValue}
-        products={products}
-        actionProduct={actionProductHandler}
-        searchChange={searchChangeHandler}
-      />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <MainLayout
+                lastOrderPrice={lastOrders.price}
+                price={price}
+                productsCart={productsCart}
+                orderState={orderState}
+                isVisibleShoppingCart={isVisibleShoppingCart}
+                showShoppingCart={showShoppingCartHandler}
+                hideShoppingCart={hideShoppingCartHandler}
+                actionProduct={actionProductHandler}
+                orderSuccess={orderSuccessHandler}
+                changeStateOrder={changeStateOrderHanlder}
+                orderNumber={lastOrders.order}
+              />
+            }
+          >
+            <Route
+              index
+              element={
+                <MainPage
+                  searchValue={searchValue}
+                  products={products}
+                  actionProduct={actionProductHandler}
+                  searchChange={searchChangeHandler}
+                />
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
+
+export default App

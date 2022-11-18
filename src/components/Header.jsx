@@ -1,4 +1,4 @@
-const Header = ({ showShoppingCart, price }) => {
+const Header = ({ showShoppingCart, lastOrderPrice }) => {
   return (
     <header className="border-b p-10">
       {/* Header Container */}
@@ -28,7 +28,7 @@ const Header = ({ showShoppingCart, price }) => {
             >
               <img
                 className={`${
-                  !!price ? '-translate-x-2' : 'translate-x-0'
+                  !!lastOrderPrice ? '-translate-x-2' : 'translate-x-0'
                 } transition-transform`}
                 width={20}
                 src="/img/cart.svg"
@@ -36,10 +36,10 @@ const Header = ({ showShoppingCart, price }) => {
               />
               <span
                 className={`relative ${
-                  !!price ? 'visible animate-price' : 'hidden'
+                  !!lastOrderPrice ? 'visible animate-price' : 'hidden'
                 } text-sm text-[#5C5C5C] transition-all`}
               >
-                {price} ₽
+                {lastOrderPrice} ₽
               </span>
             </button>
           </li>
