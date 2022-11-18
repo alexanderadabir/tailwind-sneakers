@@ -12,15 +12,15 @@ const Header = () => {
             alt="Логотип Sneakers"
           />
           <div>
-            <h2 className="uppercase text-2xl font-bold">Tailwind Sneakers</h2>
+            <h2 className="text-2xl font-bold uppercase">Tailwind Sneakers</h2>
             <p className="text-sm opacity-60">Магазин лучших кроссовок</p>
           </div>
         </div>
         {/* ./Header Left */}
 
         {/* Header Right */}
-        <ul className="flex gap-7 items-center">
-          <li className="flex items-center cursor-pointer">
+        <ul className="flex items-center gap-7">
+          <li className="flex cursor-pointer items-center">
             <img
               className="mr-2"
               width={18}

@@ -1,4 +1,4 @@
-export const sneakers = [
+const sneakers = [
   {
     img: '/img/sneakers/1.jpg',
     text: 'Мужские Кроссовки Nike Blazer Mid Suede',

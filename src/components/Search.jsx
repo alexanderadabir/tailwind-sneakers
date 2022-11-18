@@ -1,10 +1,10 @@
 const Search = () => {
   return (
-    <div className="flex border rounded-xl overflow-hidden px-5">
+    <div className="flex overflow-hidden rounded-xl border px-5">
       <img src="/img/search.svg" alt="Поиск" />
 
       <input
-        className="px-2 py-3 outline-none text-sm max-w-[100px] focus:max-w-xs ease-linear duration-300"
+        className="max-w-[100px] px-2 py-3 text-sm outline-none duration-300 ease-linear focus:max-w-xs"
         placeholder="Поиск..."
         type="text"
       />

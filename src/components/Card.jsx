@@ -1,13 +1,13 @@
 const Card = (props) => {
   const { img, text, price } = props
   return (
-    <div className="max-w-[210px] border border-[#F3F3F3] hover:border-[#F8F8F8] hover:shadow-md hover:-translate-y-2 transition-all duration-300 rounded-3xl py-5 px-7">
+    <div className="max-w-[210px] rounded-3xl border border-[#F3F3F3] py-5 px-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#F8F8F8] hover:shadow-md">
       <button>
         <img src={'/img/favorite-unlike.svg'} alt="Unlike" />
       </button>
       <img className="mb-3" src={img} alt="Кроссовки" />
 
-      <p className="text-sm mb-3">{text}</p>
+      <p className="mb-3 text-sm">{text}</p>
 
       <div className="flex justify-between">
         <div>
