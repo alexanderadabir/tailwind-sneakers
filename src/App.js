@@ -16,14 +16,13 @@ const listProducts = p.map((item) => ({
 export default function App() {
   const [products, setProducts] = useState([...listProducts])
 
-  const [isVisibleShoppingCart, setIsVisibleShoppingCart] = useState('hidden')
+  const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
+    useState('invisible')
   const showShoppingCartHandler = () => {
-    document.body.classList.add('overflow-hidden')
     setIsVisibleShoppingCart('visible')
   }
   const hideShoppingCartHandler = () => {
-    document.body.classList.remove('overflow-hidden')
-    setIsVisibleShoppingCart('hidden')
+    setIsVisibleShoppingCart('invisible')
   }
   const [productsCart, setProductsCart] = useState([])
   const [price, setPrice] = useState(0)

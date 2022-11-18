@@ -8,20 +8,18 @@ const Aside = ({
   productsCart,
   actionProduct,
 }) => {
-  console.log(isVisibleShoppingCart)
-
   return (
     <aside
       onClick={(e) => e.target.id && hideShoppingCart()}
       id="aside"
-      className={`fixed top-0 left-0 z-10 ${isVisibleShoppingCart} h-full w-full bg-black/50`}
+      className={`fixed top-0 left-0 z-10 ${isVisibleShoppingCart} h-screen w-full bg-black/50`}
     >
       <div
-        className={`linear absolute top-0 flex h-full min-w-[420px] flex-col bg-white px-8 pt-8 transition-transform duration-300 ${
-          isVisibleShoppingCart === 'hidden'
-            ? '-right-full hidden'
-            : 'visible right-0'
-        }`}
+        className={`absolute top-0 right-0 flex h-full min-w-[420px] ${
+          isVisibleShoppingCart === 'visible'
+            ? 'animate-rightFromLeft'
+            : 'animate-leftFromRight'
+        } flex-col bg-white px-8 pt-8 transition-all`}
       >
         <h2 className="mb-7 text-2xl font-bold">Корзина</h2>
 
