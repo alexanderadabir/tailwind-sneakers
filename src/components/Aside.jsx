@@ -15,7 +15,7 @@ const Aside = ({
       className={`fixed top-0 left-0 z-10 ${isVisibleShoppingCart} h-screen w-full bg-black/50`}
     >
       <div
-        className={`absolute top-0 right-0 flex h-full min-w-[420px] ${
+        className={`absolute top-0 right-0 flex h-full min-w-[400px] ${
           isVisibleShoppingCart === 'visible'
             ? 'animate-rightFromLeft'
             : 'animate-leftFromRight'

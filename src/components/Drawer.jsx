@@ -3,7 +3,7 @@ import Button from './Button'
 
 const Drawer = ({ productsCart, actionProduct, hideShoppingCart }) => {
   return (
-    <div className="flex grow flex-col gap-5 overflow-y-auto">
+    <div className="flex grow flex-col gap-5">
       {!productsCart.length && (
         <div className="flex h-full flex-col items-center justify-center">
           <img
@@ -24,13 +24,17 @@ const Drawer = ({ productsCart, actionProduct, hideShoppingCart }) => {
           />
         </div>
       )}
-      {productsCart.map((product) => (
-        <DrawerItem
-          {...product}
-          key={product.id}
-          actionProduct={actionProduct}
-        />
-      ))}
+      {productsCart.map((product, index) => {
+        if (index < 5) {
+          return (
+            <DrawerItem
+              {...product}
+              key={product.id}
+              actionProduct={actionProduct}
+            />
+          )
+        }
+      })}
     </div>
   )
 }
