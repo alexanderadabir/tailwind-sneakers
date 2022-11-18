@@ -81,6 +81,7 @@ export default function App() {
     setProductsCart([])
     setPrice(0)
     setOrderState(false)
+    setSearchValue('')
   }
 
   const [orderState, setOrderState] = useState(false)

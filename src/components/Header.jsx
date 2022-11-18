@@ -22,6 +22,7 @@ const Header = ({ showShoppingCart, price }) => {
         <ul className="flex items-center gap-7">
           <li>
             <button
+              title="Корзина"
               className="flex cursor-pointer items-center"
               onClick={showShoppingCart}
             >
