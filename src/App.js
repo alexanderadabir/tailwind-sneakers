@@ -16,15 +16,30 @@ const listProducts = p.map((item) => ({
 export default function App() {
   const [products, setProducts] = useState([...listProducts])
 
+  const [searchValue, setSearchValue] = useState('')
+
+  const searchChangeHandler = (value) => {
+    setSearchValue(value)
+    const searchValues = value.toLowerCase().split(' ')
+    const searchProduct = listProducts.filter((product) =>
+      searchValues.every((value) => product.text.toLowerCase().includes(value))
+    )
+    setProducts([...searchProduct])
+  }
+
   const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
     useState('invisible')
+
   const showShoppingCartHandler = () => {
     setIsVisibleShoppingCart('visible')
   }
+
   const hideShoppingCartHandler = () => {
     setIsVisibleShoppingCart('invisible')
   }
+
   const [productsCart, setProductsCart] = useState([])
+
   const [price, setPrice] = useState(0)
 
   const addProductHandler = (product) => {
@@ -68,7 +83,12 @@ export default function App() {
         actionProduct={actionProductHandler}
       />
       <Header price={price} showShoppingCart={showShoppingCartHandler} />
-      <Main products={products} actionProduct={actionProductHandler} />
+      <Main
+        searchValue={searchValue}
+        products={products}
+        actionProduct={actionProductHandler}
+        searchChange={searchChangeHandler}
+      />
     </div>
   )
 }
