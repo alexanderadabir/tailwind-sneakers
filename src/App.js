@@ -7,7 +7,11 @@ import Aside from './components/Aside'
 import Header from './components/Header'
 import Main from './components/Main'
 
-const listProducts = p.map((item) => ({ ...item, id: uuidv4(), added: false }))
+const listProducts = p.map((item) => ({
+  ...item,
+  id: uuidv4(),
+  addedForPurchase: false,
+}))
 
 export default function App() {
   const [products, setProducts] = useState([...listProducts])
@@ -25,10 +29,12 @@ export default function App() {
   const [price, setPrice] = useState(0)
 
   const addProductHandler = (product) => {
-    setProductsCart([...productsCart, { ...product, added: true }])
+    setProductsCart([...productsCart, { ...product, addedForPurchase: true }])
     setProducts(
       products.map((prod) =>
-        product.id === prod.id ? { ...prod, added: true } : { ...prod }
+        product.id === prod.id
+          ? { ...prod, addedForPurchase: true }
+          : { ...prod }
       )
     )
     setPrice(price + product.price)
@@ -40,14 +46,18 @@ export default function App() {
     )
     setProducts(
       products.map((prod) =>
-        product.id === prod.id ? { ...prod, added: false } : { ...prod }
+        product.id === prod.id
+          ? { ...prod, addedForPurchase: false }
+          : { ...prod }
       )
     )
     setPrice(price - product.price)
   }
 
   const actionProductHandler = (product) =>
-    !product.added ? addProductHandler(product) : deleteProductHandler(product)
+    !product.addedForPurchase
+      ? addProductHandler(product)
+      : deleteProductHandler(product)
 
   return (
     <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">

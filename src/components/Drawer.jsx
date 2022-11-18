@@ -1,7 +1,7 @@
 import DrawerItem from './DrawerItem'
 import Button from './Button'
 
-const Drawer = ({ productsCart, actionProduct }) => {
+const Drawer = ({ productsCart, actionProduct, hideShoppingCart }) => {
   return (
     <div className="flex grow flex-col gap-5 overflow-y-auto">
       {!productsCart.length && (
@@ -17,7 +17,11 @@ const Drawer = ({ productsCart, actionProduct }) => {
           <p className="mb-10 max-w-[285px] text-center opacity-40">
             Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.
           </p>
-          <Button text={'Вернуться назад'} direction={'left-12 rotate-180'} />
+          <Button
+            onClick={hideShoppingCart}
+            text={'Вернуться назад'}
+            direction={'left-12 rotate-180'}
+          />
         </div>
       )}
       {productsCart.map((product) => (

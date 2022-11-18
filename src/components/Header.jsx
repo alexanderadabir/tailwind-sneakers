@@ -25,14 +25,20 @@ const Header = ({ showShoppingCart, price }) => {
             className="flex cursor-pointer items-center"
           >
             <img
-              className={!!price ? 'mr-2' : 'mr-0'}
+              className={`${
+                !!price ? '-translate-x-2' : 'translate-x-0'
+              } transition-transform`}
               width={20}
               src="/img/cart.svg"
               alt="Корзина"
             />
-            {!!price && (
-              <span className="text-sm text-[#5C5C5C]">{price} ₽</span>
-            )}
+            <span
+              className={`relative ${
+                !!price ? 'visible animate-price' : 'hidden'
+              } text-sm text-[#5C5C5C] transition-all`}
+            >
+              {price} ₽
+            </span>
           </li>
           <li className="cursor-pointer">
             <img width={20} src="/img/favorite.svg" alt="Закладки" />

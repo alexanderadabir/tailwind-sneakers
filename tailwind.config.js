@@ -6,6 +6,7 @@ module.exports = {
       animation: {
         rightFromLeft: 'rightFromLeft .4s ease-in-out',
         arrow: 'arrow 1s ease-in-out infinite',
+        price: 'price .1s linear 1',
       },
       keyframes: {
         arrow: {
@@ -14,6 +15,10 @@ module.exports = {
         },
         rightFromLeft: {
           '0%': { right: '-100%' },
+          '100%': { right: '0' },
+        },
+        price: {
+          '0%': { right: '-40%' },
           '100%': { right: '0' },
         },
       },
