@@ -87,7 +87,7 @@ const App = () => {
 
   const [orderState, setOrderState] = useState(false);
 
-  const changeStateOrderHanlder = (e) => {
+  const changeStateOrderHandler = (e) => {
     e.preventDefault();
     setOrderState(true);
     const newOrder = {
@@ -114,7 +114,7 @@ const App = () => {
                 hideShoppingCart={hideShoppingCartHandler}
                 actionProduct={actionProductHandler}
                 orderSuccess={orderSuccessHandler}
-                changeStateOrder={changeStateOrderHanlder}
+                changeStateOrder={changeStateOrderHandler}
                 orderNumber={lastOrders.order}
               />
             }
