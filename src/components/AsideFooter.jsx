@@ -1,8 +1,8 @@
-import Button from './Button'
+import Button from "./Button";
 
 const AsideFooter = ({ price, productsCart }) => {
   if (!productsCart.length) {
-    return
+    return;
   }
 
   return (
@@ -18,13 +18,13 @@ const AsideFooter = ({ price, productsCart }) => {
         <b>{Math.floor((price / 100) * 5)} ₽</b>
       </div>
       <Button
-        text={'Оформить заказ'}
-        direction={'right-5'}
-        animation={'animate-arrow'}
-        type={'submit'}
+        text={"Оформить заказ"}
+        direction={"right-5"}
+        animation={"animate-arrow"}
+        type={"submit"}
       />
     </div>
-  )
-}
+  );
+};
 
-export default AsideFooter
+export default AsideFooter;

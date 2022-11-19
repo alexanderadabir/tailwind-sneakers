@@ -1,4 +1,4 @@
-import Card from './Card'
+import Card from "./Card";
 
 const Cards = ({ products, actionProduct }) => {
   return (
@@ -7,7 +7,7 @@ const Cards = ({ products, actionProduct }) => {
         <Card {...product} key={product.id} actionProduct={actionProduct} />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Cards
+export default Cards;

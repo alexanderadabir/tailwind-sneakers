@@ -1,19 +1,19 @@
-import Drawer from './Drawer'
-import AsideFooter from './AsideFooter'
-import OrderMessage from './OrderMessage'
-import Button from './Button'
+import Drawer from "./Drawer";
+import AsideFooter from "./AsideFooter";
+import OrderMessage from "./OrderMessage";
+import Button from "./Button";
 
 const Aside = ({
-  isVisibleShoppingCart,
-  hideShoppingCart,
-  price,
-  productsCart,
-  actionProduct,
-  orderSuccess,
-  changeStateOrder,
-  orderState,
-  orderNumber,
-}) => {
+                 isVisibleShoppingCart,
+                 hideShoppingCart,
+                 price,
+                 productsCart,
+                 actionProduct,
+                 orderSuccess,
+                 changeStateOrder,
+                 orderState,
+                 orderNumber
+               }) => {
   return (
     <aside
       onClick={(e) => e.target.id && hideShoppingCart()}
@@ -23,25 +23,25 @@ const Aside = ({
       <form
         onSubmit={(e) => changeStateOrder(e)}
         className={`absolute top-0 right-0 flex h-full min-w-[400px] ${
-          isVisibleShoppingCart === 'visible'
-            ? 'animate-rightFromLeft'
-            : 'animate-leftFromRight'
+          isVisibleShoppingCart === "visible"
+            ? "animate-rightFromLeft"
+            : "animate-leftFromRight"
         } flex-col bg-white px-8 pt-8 transition-all`}
       >
         <h2 className="mb-7 text-2xl font-bold">Корзина</h2>
 
         {orderState ? (
           <OrderMessage
-            img={'/img/success-order.png'}
-            title={'Заказ оформлен'}
-            titleStyles={'text-lime-500'}
+            img={"/img/success-order.png"}
+            title={"Заказ оформлен"}
+            titleStyles={"text-lime-500"}
             text={`Ваш заказ #${orderNumber} скоро будет передан курьерской доставке`}
           >
             <Button
-              type={'button'}
+              type={"button"}
               onClick={orderSuccess}
-              text={'Вернуться назад'}
-              direction={'left-12 rotate-180'}
+              text={"Вернуться назад"}
+              direction={"left-12 rotate-180"}
             />
           </OrderMessage>
         ) : (
@@ -56,7 +56,7 @@ const Aside = ({
         )}
       </form>
     </aside>
-  )
-}
+  );
+};
 
-export default Aside
+export default Aside;

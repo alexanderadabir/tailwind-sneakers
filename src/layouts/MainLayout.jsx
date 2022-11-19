@@ -1,20 +1,20 @@
-import { Outlet } from 'react-router-dom'
-import Header from '../components/Header'
-import Aside from '../components/Aside'
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header";
+import Aside from "../components/Aside";
 
 const MainLayout = ({
-  price,
-  showShoppingCart,
-  productsCart,
-  isVisibleShoppingCart,
-  hideShoppingCart,
-  actionProduct,
-  orderSuccess,
-  changeStateOrder,
-  orderState,
-  orderNumber,
-  lastOrderPrice,
-}) => {
+                      price,
+                      showShoppingCart,
+                      productsCart,
+                      isVisibleShoppingCart,
+                      hideShoppingCart,
+                      actionProduct,
+                      orderSuccess,
+                      changeStateOrder,
+                      orderState,
+                      orderNumber,
+                      lastOrderPrice
+                    }) => {
   return (
     <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">
       <Header
@@ -34,7 +34,7 @@ const MainLayout = ({
       />
       <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

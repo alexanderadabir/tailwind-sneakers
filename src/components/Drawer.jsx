@@ -1,22 +1,22 @@
-import DrawerItem from './DrawerItem'
-import OrderMessage from './OrderMessage'
-import Button from './Button'
+import DrawerItem from "./DrawerItem";
+import OrderMessage from "./OrderMessage";
+import Button from "./Button";
 
 const Drawer = ({ productsCart, actionProduct, hideShoppingCart }) => {
   return (
     <div className="flex grow flex-col gap-5">
       {!productsCart.length && (
         <OrderMessage
-          title={'Корзина пустая'}
-          text={'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'}
-          img={'/img/basket.png'}
+          title={"Корзина пустая"}
+          text={"Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."}
+          img={"/img/basket.png"}
           hideShoppingCart={hideShoppingCart}
         >
           <Button
-            type={'button'}
+            type={"button"}
             onClick={hideShoppingCart}
-            text={'Вернуться назад'}
-            direction={'left-12 rotate-180'}
+            text={"Вернуться назад"}
+            direction={"left-12 rotate-180"}
           />
         </OrderMessage>
       )}
@@ -31,7 +31,7 @@ const Drawer = ({ productsCart, actionProduct, hideShoppingCart }) => {
           )
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Drawer
+export default Drawer;

@@ -11,7 +11,7 @@ const Search = ({ searchValue, searchChange }) => {
         type="text"
       />
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

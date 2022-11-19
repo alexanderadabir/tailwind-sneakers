@@ -28,7 +28,7 @@ const Header = ({ showShoppingCart, lastOrderPrice }) => {
             >
               <img
                 className={`${
-                  !!lastOrderPrice ? '-translate-x-2' : 'translate-x-0'
+                  !!lastOrderPrice ? "-translate-x-2" : "translate-x-0"
                 } transition-transform`}
                 width={20}
                 src="/img/cart.svg"
@@ -36,7 +36,7 @@ const Header = ({ showShoppingCart, lastOrderPrice }) => {
               />
               <span
                 className={`relative ${
-                  !!lastOrderPrice ? 'visible animate-price' : 'hidden'
+                  !!lastOrderPrice ? "visible animate-price" : "hidden"
                 } text-sm text-[#5C5C5C] transition-all`}
               >
                 {lastOrderPrice} ₽
@@ -58,7 +58,7 @@ const Header = ({ showShoppingCart, lastOrderPrice }) => {
       </div>
       {/* ./Header Container */}
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

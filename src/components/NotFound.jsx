@@ -6,7 +6,7 @@ const NotFound = () => {
       </h1>
       <img width={70} src="/img/roll-smile.png" alt="" />
     </div>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

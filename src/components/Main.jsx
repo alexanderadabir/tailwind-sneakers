@@ -1,5 +1,5 @@
-import Cards from './Cards'
-import Search from './Search'
+import Cards from "./Cards";
+import Search from "./Search";
 
 const Main = ({ products, actionProduct, searchValue, searchChange }) => {
   return (
@@ -12,7 +12,7 @@ const Main = ({ products, actionProduct, searchValue, searchChange }) => {
         <Cards products={products} actionProduct={actionProduct} />
       </section>
     </main>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;
