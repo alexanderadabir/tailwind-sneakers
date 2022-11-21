@@ -14,21 +14,24 @@ const listProducts = p.map((item) => ({
   addedForPurchase: false
 }));
 
-const App = () => {
+export default function App() {
   const [products, setProducts] = useState([...listProducts]);
-
   const [searchValue, setSearchValue] = useState("");
+  const [price, setPrice] = useState(0);
+  const [productsCart, setProductsCart] = useState([]);
+  const [lastOrders, setLastOrders] = useState({});
 
   const searchChangeHandler = (value) => {
     setSearchValue(value);
+
     const searchValues = value.toLowerCase().split(" ");
+
     const searchProduct = listProducts.filter((product) =>
       searchValues.every((value) => product.text.toLowerCase().includes(value))
     );
+
     setProducts([...searchProduct]);
   };
-
-  const [price, setPrice] = useState(0);
 
   const showShoppingCartHandler = () => {
     setIsVisibleShoppingCart("visible");
@@ -41,10 +44,9 @@ const App = () => {
     setIsVisibleShoppingCart("invisible");
   };
 
-  const [productsCart, setProductsCart] = useState([]);
-
   const addProductHandler = (product) => {
     setProductsCart([...productsCart, { ...product, addedForPurchase: true }]);
+
     setProducts(
       products.map((prod) =>
         product.id === prod.id
@@ -52,6 +54,7 @@ const App = () => {
           : { ...prod }
       )
     );
+
     setPrice(price + product.price);
   };
 
@@ -59,6 +62,7 @@ const App = () => {
     setProductsCart(
       productsCart.filter((productCart) => productCart.id !== product.id)
     );
+
     setProducts(
       products.map((prod) =>
         product.id === prod.id
@@ -66,10 +70,9 @@ const App = () => {
           : { ...prod }
       )
     );
+
     setPrice(price - product.price);
   };
-
-  const [lastOrders, setLastOrders] = useState({});
 
   const actionProductHandler = (product) =>
     !product.addedForPurchase
@@ -78,10 +81,15 @@ const App = () => {
 
   const orderSuccessHandler = () => {
     setProducts([...listProducts]);
+
     setIsVisibleShoppingCart("invisible");
+
     setProductsCart([]);
+
     setPrice(0);
+
     setOrderState(false);
+
     setSearchValue("");
   };
 
@@ -89,14 +97,18 @@ const App = () => {
 
   const changeStateOrderHandler = (e) => {
     e.preventDefault();
+
     setOrderState(true);
+
     const newOrder = {
       products: [...productsCart],
       order: Math.floor(Math.random() * 20),
       price
     };
+
     setLastOrders(newOrder);
   };
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -137,5 +149,3 @@ const App = () => {
     </BrowserRouter>
   );
 };
-
-export default App;
