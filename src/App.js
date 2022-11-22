@@ -1,32 +1,39 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import MainPage from "./components/MainPage";
 import NotFound from "./components/NotFound";
 import MainLayout from "./layouts/MainLayout";
 
-import p from "./data/products";
-
-const listProducts = p.map((item) => ({
-  ...item,
-  id: uuidv4(),
-  addedForPurchase: false
-}));
-
 export default function App() {
-  const [products, setProducts] = useState([...listProducts]);
+  const [items, setItems] = useState([])
+  const [products, setProducts] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [price, setPrice] = useState(0);
   const [productsCart, setProductsCart] = useState([]);
   const [lastOrders, setLastOrders] = useState({});
+  const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
+    useState("invisible");
+
+  useEffect(() => {
+    fetch('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items')
+      .then(res => res.json())
+      .then(data => setItems(data.map((item) => ({
+        ...item,
+        id: uuidv4(),
+        addedForPurchase: false
+      }))))
+  }, [])
+
+  useEffect(() =>  setProducts([...items]), [items])
 
   const searchChangeHandler = (value) => {
     setSearchValue(value);
 
     const searchValues = value.toLowerCase().split(" ");
 
-    const searchProduct = listProducts.filter((product) =>
+    const searchProduct = items.filter((product) =>
       searchValues.every((value) => product.text.toLowerCase().includes(value))
     );
 
@@ -36,9 +43,6 @@ export default function App() {
   const showShoppingCartHandler = () => {
     setIsVisibleShoppingCart("visible");
   };
-
-  const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
-    useState("invisible");
 
   const hideShoppingCartHandler = () => {
     setIsVisibleShoppingCart("invisible");
@@ -80,7 +84,7 @@ export default function App() {
       : deleteProductHandler(product);
 
   const orderSuccessHandler = () => {
-    setProducts([...listProducts]);
+    setProducts([...items]);
 
     setIsVisibleShoppingCart("invisible");
 
