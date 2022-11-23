@@ -1,13 +1,19 @@
 import Cards from "./Cards";
 import Search from "./Search";
 
-const Main = ({ products, actionProduct, searchValue, searchChange }) => {
+const Main = ({ products, actionProduct, searchValue, searchChange, searchClear }) => {
   return (
     <main className="px-14 py-10">
       <section>
         <div className="mb-16 flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Все кроссовки</h1>
-          <Search searchValue={searchValue} searchChange={searchChange} />
+
+          {
+            searchValue
+              ? <h1 className="text-3xl font-bold basis-2/3 whitespace-nowrap overflow-hidden">Поиск: <span className="text-2xl opacity-30">'{searchValue}'</span></h1>
+              : <h1 className="text-3xl font-bold">Все кроссовки</h1>
+          }
+
+          <Search searchValue={searchValue} searchChange={searchChange} searchClear={searchClear} />
         </div>
         <Cards products={products} actionProduct={actionProduct} />
       </section>

@@ -4,7 +4,8 @@ export default function MainPage({
                                    searchValue,
                                    products,
                                    actionProduct,
-                                   searchChange
+                                   searchChange,
+                                   searchClear
                                  }) {
   return (
     <Main
@@ -12,6 +13,7 @@ export default function MainPage({
       products={products}
       actionProduct={actionProduct}
       searchChange={searchChange}
+      searchClear={searchClear}
     />
   );
 }

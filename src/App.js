@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import MainPage from "./components/MainPage";
 import NotFound from "./components/NotFound";
@@ -17,9 +18,8 @@ export default function App() {
     useState("invisible");
 
   useEffect(() => {
-    fetch('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items')
-      .then(res => res.json())
-      .then(data => setItems(data.map((item) => ({
+    axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items')
+      .then(res => setItems(res.data.map((item) => ({
         ...item,
         id: uuidv4(),
         addedForPurchase: false
@@ -27,6 +27,11 @@ export default function App() {
   }, [])
 
   useEffect(() =>  setProducts([...items]), [items])
+
+  const searchClearHandler = () => {
+    setSearchValue('')
+    setProducts([...items])
+  }
 
   const searchChangeHandler = (value) => {
     setSearchValue(value);
@@ -143,6 +148,7 @@ export default function App() {
                   products={products}
                   actionProduct={actionProductHandler}
                   searchChange={searchChangeHandler}
+                  searchClear={searchClearHandler}
                 />
               }
             />
