@@ -18,12 +18,20 @@ export default function App() {
     useState("invisible");
 
   useEffect(() => {
+    setPrice(productsCart.reduce((acc, product) => acc += product.price, 0))
+    axios.post('https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart', ...productsCart)
+  }, [])
+
+  useEffect(() => {
     axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items')
       .then(res => setItems(res.data.map((item) => ({
         ...item,
-        id: uuidv4(),
+        uuid: uuidv4(),
         addedForPurchase: false
       }))))
+
+    axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart')
+      .then(res => setProductsCart([...res.data]))
   }, [])
 
   useEffect(() =>  setProducts([...items]), [items])
@@ -54,33 +62,34 @@ export default function App() {
   };
 
   const addProductHandler = (product) => {
-    setProductsCart([...productsCart, { ...product, addedForPurchase: true }]);
+    const updateProduct = {...product, addedForPurchase: true}
+
+    setProductsCart([...productsCart, updateProduct]);
 
     setProducts(
       products.map((prod) =>
-        product.id === prod.id
-          ? { ...prod, addedForPurchase: true }
+        product.uuid === prod.uuid
+          ? updateProduct
           : { ...prod }
       )
     );
 
-    setPrice(price + product.price);
   };
 
   const deleteProductHandler = (product) => {
+    const updateProduct = {...product, addedForPurchase: false}
+
     setProductsCart(
-      productsCart.filter((productCart) => productCart.id !== product.id)
+      productsCart.filter((productCart) => productCart.uuid !== product.uuid)
     );
 
     setProducts(
       products.map((prod) =>
-        product.id === prod.id
-          ? { ...prod, addedForPurchase: false }
+        product.uuid === prod.uuid
+          ? updateProduct
           : { ...prod }
       )
     );
-
-    setPrice(price - product.price);
   };
 
   const actionProductHandler = (product) =>
