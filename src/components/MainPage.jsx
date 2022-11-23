@@ -1,12 +1,12 @@
-import Main from "./Main";
+import Main from './Main'
 
 export default function MainPage({
-                                   searchValue,
-                                   products,
-                                   actionProduct,
-                                   searchChange,
-                                   searchClear
-                                 }) {
+  searchValue,
+  products,
+  actionProduct,
+  searchChange,
+  searchClear,
+}) {
   return (
     <Main
       searchValue={searchValue}
@@ -15,5 +15,5 @@ export default function MainPage({
       searchChange={searchChange}
       searchClear={searchClear}
     />
-  );
+  )
 }

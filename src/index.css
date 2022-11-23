@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-    padding: 5.3125rem;
-    font-family: 'Inter', sans-serif;
-    background-color: #e7f6ff;
+  padding: 5.3125rem;
+  font-family: 'Inter', sans-serif;
+  background-color: #e7f6ff;
 }
 
 button,
 input {
-    font-family: inherit;
+  font-family: inherit;
 }

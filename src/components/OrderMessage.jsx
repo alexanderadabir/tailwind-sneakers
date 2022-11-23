@@ -7,7 +7,7 @@ const OrderMessage = ({ img, title, text, children, titleStyles }) => {
 
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default OrderMessage;
+export default OrderMessage

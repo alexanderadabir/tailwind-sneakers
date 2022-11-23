@@ -1,40 +1,47 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
 
-import MainPage from "./components/MainPage";
-import NotFound from "./components/NotFound";
-import MainLayout from "./layouts/MainLayout";
+import MainPage from './components/MainPage'
+import NotFound from './components/NotFound'
+import MainLayout from './layouts/MainLayout'
 
 export default function App() {
   const [items, setItems] = useState([])
-  const [products, setProducts] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [price, setPrice] = useState(0);
-  const [productsCart, setProductsCart] = useState([]);
-  const [lastOrders, setLastOrders] = useState({});
+  const [products, setProducts] = useState([])
+  const [searchValue, setSearchValue] = useState('')
+  const [price, setPrice] = useState(0)
+  const [productsCart, setProductsCart] = useState([])
+  const [lastOrders, setLastOrders] = useState({})
   const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
-    useState("invisible");
+    useState('invisible')
 
   useEffect(() => {
-    setPrice(productsCart.reduce((acc, product) => acc += product.price, 0))
-    axios.post('https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart', ...productsCart)
+    setPrice(productsCart.reduce((acc, product) => (acc += product.price), 0))
+    axios.post(
+      'https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart',
+      ...productsCart
+    )
   }, [])
 
   useEffect(() => {
-    axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items')
-      .then(res => setItems(res.data.map((item) => ({
-        ...item,
-        uuid: uuidv4(),
-        addedForPurchase: false
-      }))))
+    axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items').then((res) =>
+      setItems(
+        res.data.map((item) => ({
+          ...item,
+          uuid: uuidv4(),
+          addedForPurchase: false,
+        }))
+      )
+    )
 
-    axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart')
-      .then(res => setProductsCart([...res.data]))
+    axios
+      .get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart')
+      .then((res) => setProductsCart([...res.data]))
   }, [])
 
-  useEffect(() =>  setProducts([...items]), [items])
+  useEffect(() => setProducts([...items]), [items])
 
   const searchClearHandler = () => {
     setSearchValue('')
@@ -42,90 +49,80 @@ export default function App() {
   }
 
   const searchChangeHandler = (value) => {
-    setSearchValue(value);
+    setSearchValue(value)
 
-    const searchValues = value.toLowerCase().split(" ");
+    const searchValues = value.toLowerCase().split(' ')
 
     const searchProduct = items.filter((product) =>
       searchValues.every((value) => product.text.toLowerCase().includes(value))
-    );
+    )
 
-    setProducts([...searchProduct]);
-  };
+    setProducts([...searchProduct])
+  }
 
   const showShoppingCartHandler = () => {
-    setIsVisibleShoppingCart("visible");
-  };
+    setIsVisibleShoppingCart('visible')
+  }
 
   const hideShoppingCartHandler = () => {
-    setIsVisibleShoppingCart("invisible");
-  };
+    setIsVisibleShoppingCart('invisible')
+  }
 
   const addProductHandler = (product) => {
-    const updateProduct = {...product, addedForPurchase: true}
+    const updateProduct = { ...product, addedForPurchase: true }
 
-    setProductsCart([...productsCart, updateProduct]);
+    setProductsCart([...productsCart, updateProduct])
 
     setProducts(
       products.map((prod) =>
-        product.uuid === prod.uuid
-          ? updateProduct
-          : { ...prod }
+        product.uuid === prod.uuid ? updateProduct : { ...prod }
       )
-    );
-
-  };
+    )
+  }
 
   const deleteProductHandler = (product) => {
-    const updateProduct = {...product, addedForPurchase: false}
+    const updateProduct = { ...product, addedForPurchase: false }
 
     setProductsCart(
       productsCart.filter((productCart) => productCart.uuid !== product.uuid)
-    );
+    )
 
     setProducts(
       products.map((prod) =>
-        product.uuid === prod.uuid
-          ? updateProduct
-          : { ...prod }
+        product.uuid === prod.uuid ? updateProduct : { ...prod }
       )
-    );
-  };
+    )
+  }
 
   const actionProductHandler = (product) =>
     !product.addedForPurchase
       ? addProductHandler(product)
-      : deleteProductHandler(product);
+      : deleteProductHandler(product)
 
   const orderSuccessHandler = () => {
-    setProducts([...items]);
+    setProducts([...items])
+    setIsVisibleShoppingCart('invisible')
+    setProductsCart([])
+    setPrice(0)
+    setOrderState(false)
+    setSearchValue('')
+  }
 
-    setIsVisibleShoppingCart("invisible");
-
-    setProductsCart([]);
-
-    setPrice(0);
-
-    setOrderState(false);
-
-    setSearchValue("");
-  };
-
-  const [orderState, setOrderState] = useState(false);
+  const [orderState, setOrderState] = useState(false)
 
   const changeStateOrderHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    setOrderState(true);
+    setOrderState(true)
 
     const newOrder = {
       products: [...productsCart],
       order: Math.floor(Math.random() * 20),
-      price
-    };
+      price,
+    }
 
-    setLastOrders(newOrder);
-  };
+    setLastOrders(newOrder)
+  }
 
   return (
     <BrowserRouter>
@@ -166,5 +163,5 @@ export default function App() {
         </Routes>
       </div>
     </BrowserRouter>
-  );
-};
+  )
+}

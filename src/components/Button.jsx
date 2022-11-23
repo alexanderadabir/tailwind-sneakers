@@ -12,7 +12,7 @@ const Button = ({ text, direction, animation, onClick, type }) => {
         alt={`Arrow`}
       />
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button
