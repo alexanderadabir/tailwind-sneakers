@@ -25,7 +25,7 @@ const Drawer = ({ productsCart, actionProduct, hideShoppingCart }) => {
           index < 5 && (
             <DrawerItem
               {...product}
-              key={product.id}
+              key={product.uuid}
               actionProduct={actionProduct}
             />
           )
