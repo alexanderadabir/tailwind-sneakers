@@ -7,6 +7,7 @@ const Main = ({
   searchValue,
   searchChange,
   searchClear,
+  isLoadingPage,
 }) => {
   return (
     <main className="px-14 py-10">
@@ -27,7 +28,11 @@ const Main = ({
             searchClear={searchClear}
           />
         </div>
-        <Cards products={products} actionProduct={actionProduct} />
+        <Cards
+          isLoadingPage={isLoadingPage}
+          products={products}
+          actionProduct={actionProduct}
+        />
       </section>
     </main>
   )

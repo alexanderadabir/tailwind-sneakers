@@ -16,25 +16,26 @@ export default function App() {
   const [lastOrders, setLastOrders] = useState({})
   const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
     useState('invisible')
+  const [isLoadingPage, setIsLoadingPage] = useState(true)
 
   useEffect(() => {
     setPrice(productsCart.reduce((acc, product) => (acc += product.price), 0))
-    axios.post(
-      'https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart',
-      ...productsCart
-    )
-  }, [])
+  }, [productsCart])
 
   useEffect(() => {
-    axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items').then((res) =>
-      setItems(
-        res.data.map((item) => ({
-          ...item,
-          uuid: uuidv4(),
-          addedForPurchase: false,
-        }))
-      )
-    )
+    axios
+      .get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items')
+      .then((res) => {
+        setItems(
+          res.data.map((item) => ({
+            ...item,
+            uuid: uuidv4(),
+            addedForPurchase: false,
+          }))
+        )
+
+        setIsLoadingPage(false)
+      })
 
     axios
       .get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart')
@@ -70,12 +71,16 @@ export default function App() {
 
   const addProductHandler = (product) => {
     const updateProduct = { ...product, addedForPurchase: true }
+    axios.post(
+      'https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart',
+      updateProduct
+    )
 
     setProductsCart([...productsCart, updateProduct])
 
     setProducts(
       products.map((prod) =>
-        product.uuid === prod.uuid ? updateProduct : { ...prod }
+        updateProduct.uuid === prod.uuid ? updateProduct : { ...prod }
       )
     )
   }
@@ -84,12 +89,14 @@ export default function App() {
     const updateProduct = { ...product, addedForPurchase: false }
 
     setProductsCart(
-      productsCart.filter((productCart) => productCart.uuid !== product.uuid)
+      productsCart.filter(
+        (productCart) => productCart.uuid !== updateProduct.uuid
+      )
     )
 
     setProducts(
       products.map((prod) =>
-        product.uuid === prod.uuid ? updateProduct : { ...prod }
+        updateProduct.uuid === prod.uuid ? updateProduct : { ...prod }
       )
     )
   }
@@ -150,6 +157,7 @@ export default function App() {
               index
               element={
                 <MainPage
+                  isLoadingPage={isLoadingPage}
                   searchValue={searchValue}
                   products={products}
                   actionProduct={actionProductHandler}

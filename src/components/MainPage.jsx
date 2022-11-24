@@ -6,9 +6,11 @@ export default function MainPage({
   actionProduct,
   searchChange,
   searchClear,
+  isLoadingPage,
 }) {
   return (
     <Main
+      isLoadingPage={isLoadingPage}
       searchValue={searchValue}
       products={products}
       actionProduct={actionProduct}
