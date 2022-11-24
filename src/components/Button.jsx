@@ -1,4 +1,4 @@
-const Button = ({ text, direction, animation, onClick, type }) => {
+export default function Button({ text, direction, animation, onClick, type }) {
   return (
     <button
       type={type}
@@ -14,5 +14,3 @@ const Button = ({ text, direction, animation, onClick, type }) => {
     </button>
   )
 }
-
-export default Button

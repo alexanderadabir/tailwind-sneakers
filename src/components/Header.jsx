@@ -1,9 +1,7 @@
-const Header = ({ showShoppingCart, lastOrderPrice }) => {
+export default function Header({ price, switchVisibilityCart }) {
   return (
     <header className="border-b p-10">
-      {/* Header Container */}
       <div className="flex justify-between">
-        {/* Header Left */}
         <div className="flex items-center gap-3">
           <img
             width={40}
@@ -16,31 +14,20 @@ const Header = ({ showShoppingCart, lastOrderPrice }) => {
             <p className="text-sm opacity-60">Магазин лучших кроссовок</p>
           </div>
         </div>
-        {/* ./Header Left */}
-
-        {/* Header Right */}
         <ul className="flex items-center gap-7">
           <li>
             <button
+              onClick={switchVisibilityCart}
               title="Корзина"
               className="flex cursor-pointer items-center"
-              onClick={showShoppingCart}
             >
               <img
-                className={`${
-                  !!lastOrderPrice ? '-translate-x-2' : 'translate-x-0'
-                } transition-transform`}
+                className="mr-2"
                 width={20}
                 src="/img/cart.svg"
                 alt="Корзина"
               />
-              <span
-                className={`relative ${
-                  !!lastOrderPrice ? 'visible animate-price' : 'hidden'
-                } text-sm text-[#5C5C5C] transition-all`}
-              >
-                {lastOrderPrice} ₽
-              </span>
+              <span>{price} ₽</span>
             </button>
           </li>
           <li className="cursor-pointer">
@@ -54,11 +41,7 @@ const Header = ({ showShoppingCart, lastOrderPrice }) => {
             </a>
           </li>
         </ul>
-        {/* ./Header Right */}
       </div>
-      {/* ./Header Container */}
     </header>
   )
 }
-
-export default Header
