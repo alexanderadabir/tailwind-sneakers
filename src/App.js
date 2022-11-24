@@ -1,175 +1,77 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 
-import MainPage from './components/MainPage'
-import NotFound from './components/NotFound'
-import MainLayout from './layouts/MainLayout'
+import Header from './components/Header'
+import Aside from './components/Aside'
+import Main from './components/Main'
 
 export default function App() {
   const [items, setItems] = useState([])
-  const [products, setProducts] = useState([])
   const [searchValue, setSearchValue] = useState('')
   const [price, setPrice] = useState(0)
   const [productsCart, setProductsCart] = useState([])
-  const [lastOrders, setLastOrders] = useState({})
-  const [isVisibleShoppingCart, setIsVisibleShoppingCart] =
-    useState('invisible')
   const [isLoadingPage, setIsLoadingPage] = useState(true)
-
-  useEffect(() => {
-    setPrice(productsCart.reduce((acc, product) => (acc += product.price), 0))
-  }, [productsCart])
+  const [toggleCart, setToggleCart] = useState(false)
 
   useEffect(() => {
     axios
       .get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items')
       .then((res) => {
-        setItems(
-          res.data.map((item) => ({
-            ...item,
-            uuid: uuidv4(),
-            addedForPurchase: false,
-          }))
-        )
-
+        setItems(res.data)
         setIsLoadingPage(false)
       })
 
     axios
       .get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart')
-      .then((res) => setProductsCart([...res.data]))
+      .then((res) => setProductsCart(res.data))
   }, [])
 
-  useEffect(() => setProducts([...items]), [items])
+  useEffect(() => {
+    setPrice(productsCart.reduce((sum, product) => (sum += product.price), 0))
+  }, [productsCart])
 
-  const searchClearHandler = () => {
-    setSearchValue('')
-    setProducts([...items])
+  const searchChangeHandler = (value) => setSearchValue(value)
+
+  const addProductHandler = (item) => {
+    axios.post('https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart', item)
+    setProductsCart([...productsCart, item])
   }
 
-  const searchChangeHandler = (value) => {
-    setSearchValue(value)
-
-    const searchValues = value.toLowerCase().split(' ')
-
-    const searchProduct = items.filter((product) =>
-      searchValues.every((value) => product.text.toLowerCase().includes(value))
-    )
-
-    setProducts([...searchProduct])
+  const deleteProductHandler = (item) => {
+    axios.delete(`https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart/${item.id}`)
+    setProductsCart(productsCart.filter((product) => product.id !== item.id))
   }
 
-  const showShoppingCartHandler = () => {
-    setIsVisibleShoppingCart('visible')
-  }
-
-  const hideShoppingCartHandler = () => {
-    setIsVisibleShoppingCart('invisible')
-  }
-
-  const addProductHandler = (product) => {
-    const updateProduct = { ...product, addedForPurchase: true }
-    axios.post(
-      'https://637cbe8e72f3ce38eaac43cb.mockapi.io/cart',
-      updateProduct
-    )
-
-    setProductsCart([...productsCart, updateProduct])
-
-    setProducts(
-      products.map((prod) =>
-        updateProduct.uuid === prod.uuid ? updateProduct : { ...prod }
-      )
-    )
-  }
-
-  const deleteProductHandler = (product) => {
-    const updateProduct = { ...product, addedForPurchase: false }
-
-    setProductsCart(
-      productsCart.filter(
-        (productCart) => productCart.uuid !== updateProduct.uuid
-      )
-    )
-
-    setProducts(
-      products.map((prod) =>
-        updateProduct.uuid === prod.uuid ? updateProduct : { ...prod }
-      )
-    )
-  }
-
-  const actionProductHandler = (product) =>
-    !product.addedForPurchase
-      ? addProductHandler(product)
-      : deleteProductHandler(product)
-
-  const orderSuccessHandler = () => {
-    setProducts([...items])
-    setIsVisibleShoppingCart('invisible')
-    setProductsCart([])
-    setPrice(0)
-    setOrderState(false)
-    setSearchValue('')
-  }
-
-  const [orderState, setOrderState] = useState(false)
-
-  const changeStateOrderHandler = (e) => {
-    e.preventDefault()
-
-    setOrderState(true)
-
-    const newOrder = {
-      products: [...productsCart],
-      order: Math.floor(Math.random() * 20),
-      price,
-    }
-
-    setLastOrders(newOrder)
+  const switchVisibilityCartHandler = () => {
+    setToggleCart((prev) => !prev)
   }
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <MainLayout
-                lastOrderPrice={lastOrders.price}
-                price={price}
-                productsCart={productsCart}
-                orderState={orderState}
-                isVisibleShoppingCart={isVisibleShoppingCart}
-                showShoppingCart={showShoppingCartHandler}
-                hideShoppingCart={hideShoppingCartHandler}
-                actionProduct={actionProductHandler}
-                orderSuccess={orderSuccessHandler}
-                changeStateOrder={changeStateOrderHandler}
-                orderNumber={lastOrders.order}
-              />
-            }
-          >
-            <Route
-              index
-              element={
-                <MainPage
-                  isLoadingPage={isLoadingPage}
-                  searchValue={searchValue}
-                  products={products}
-                  actionProduct={actionProductHandler}
-                  searchChange={searchChangeHandler}
-                  searchClear={searchClearHandler}
-                />
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+    <div className="App">
+      <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">
+        <Header
+          price={price}
+          switchVisibilityCart={switchVisibilityCartHandler}
+        />
+
+        <Main
+          items={items}
+          searchChange={searchChangeHandler}
+          searchValue={searchValue}
+          isLoadingPage={isLoadingPage}
+          addProduct={addProductHandler}
+          deleteProduct={deleteProductHandler}
+        />
+
+        {toggleCart && (
+          <Aside
+            productsCart={productsCart}
+            price={price}
+            deleteProduct={deleteProductHandler}
+          />
+        )}
       </div>
-    </BrowserRouter>
+    </div>
   )
 }
