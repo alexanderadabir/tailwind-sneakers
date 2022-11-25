@@ -30,10 +30,10 @@ export default function Card(props) {
           src={
             isFavorite ? '/img/favorite-like.svg' : '/img/favorite-unlike.svg'
           }
-          alt="Unlike"
+          alt="Добавить в избранное"
         />
       </button>
-      <img className="mb-3" src={path} alt="Кроссовки" />
+      <img className="mb-3" src={path} alt="Фото пары кроссовок" />
 
       <p className="mb-3 text-sm">{text}</p>
 
@@ -45,9 +45,8 @@ export default function Card(props) {
 
         <button onClick={onClickedAdd}>
           <img
-            className="cardBtn"
             src={isAdded ? '/img/btn-success.svg' : '/img/btn-plus.svg'}
-            alt="Добавить"
+            alt="Добавить в корзину"
           />
         </button>
       </div>

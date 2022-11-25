@@ -40,15 +40,10 @@ export default function ShoppingCart({
           </div>
           <div className="flex items-baseline justify-between">
             <p>Налог 5%:</p>
-            <span className="relative w-1/2 border-dashed file:border-b"></span>
+            <span className="relative w-1/2 border-b border-dashed"></span>
             <b>{Math.floor((price / 100) * 5)} ₽</b>
           </div>
-          <Button
-            text={'Оформить заказ'}
-            direction={'right-5'}
-            animation={'animate-arrow'}
-            type={'submit'}
-          />
+          <Button text="Оформить заказ" direction="right-5" type="submit" />
         </div>
       </form>
     </aside>

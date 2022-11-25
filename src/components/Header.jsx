@@ -10,7 +10,7 @@ export default function Header({ price, onToggleVisibilityShoppingCart }) {
               width={40}
               height={40}
               src="/img/logo.png"
-              alt="Логотип Sneakers"
+              alt="Интернет-магазин Sneakers"
             />
 
             <div>
@@ -44,7 +44,7 @@ export default function Header({ price, onToggleVisibilityShoppingCart }) {
           </li>
           <li>
             <Link to="/users" title="Личный кабинет">
-              <img width={20} src="/img/user.svg" alt="Пользователь" />
+              <img width={20} src="/img/user.svg" alt="Личный кабинет" />
             </Link>
           </li>
         </ul>

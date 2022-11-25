@@ -11,14 +11,9 @@ export default function Home({
     <main className="px-14 py-10">
       <section>
         <div className="mb-16 flex items-center justify-between">
-          {searchValue ? (
-            <h1 className="basis-2/3 overflow-hidden whitespace-nowrap text-3xl font-bold">
-              Поиск:{' '}
-              <span className="text-2xl opacity-30">'{searchValue}'</span>
-            </h1>
-          ) : (
-            <h1 className="text-3xl font-bold">Все кроссовки</h1>
-          )}
+          <h1 className="basis-2/3 overflow-hidden whitespace-nowrap text-3xl font-bold">
+            {searchValue ? `Поиск: ${searchValue}` : 'Все кроссовки'}
+          </h1>
 
           <div className="relative flex overflow-hidden rounded-xl border px-5">
             <img src="/img/search.svg" alt="Поиск" />
@@ -30,7 +25,10 @@ export default function Home({
               type="text"
             />
             {searchValue && (
-              <div className="group absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer p-2">
+              <div
+                onClick={() => onChangeSearchValue('')}
+                className="group absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer p-2"
+              >
                 <img
                   className="w-3 rotate-45 transition-transform group-hover:scale-150"
                   src="/img/cross.svg"

@@ -33,25 +33,29 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    setPrice(shoppingCart.reduce((sum, item) => (sum += item.price), 0))
+    setPrice(shoppingCart.reduce((sum, cartItem) => (sum += cartItem.price), 0))
   }, [shoppingCart])
 
   const onChangeSearchValueHandler = (value) => setSearchValue(value)
 
-  const onAddItemHandler = (item) => {
-    if (shoppingCart.find((cartItem) => cartItem.id === item.id)) {
-      axios.delete(
-        `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${item.id}`
-      )
-      setShoppingCart((prev) =>
-        prev.filter((cartItem) => cartItem.id !== item.id)
-      )
-    } else {
-      axios.post(
-        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart',
-        item
-      )
-      setShoppingCart((prev) => [...prev, item])
+  const onAddItemHandler = async (item) => {
+    try {
+      if (shoppingCart.find((cartItem) => cartItem.id === item.id)) {
+        axios.delete(
+          `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${item.id}`
+        )
+        setShoppingCart((prev) =>
+          prev.filter((cartItem) => cartItem.id !== item.id)
+        )
+      } else {
+        const { data } = await axios.post(
+          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart',
+          item
+        )
+        setShoppingCart((prev) => [...prev, data])
+      }
+    } catch (error) {
+      alert('Не удалось добавить в корзину')
     }
   }
 
@@ -64,16 +68,23 @@ export default function App() {
     )
   }
 
-  const onFavoriteItemHandler = (item) => {
-    if (favorites.find((favItem) => favItem.id === item.id)) {
-      axios.delete(
-        `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${item.id}`
-      )
-      setFavorites((prev) => prev.filter((favItem) => favItem.id !== item.id))
-    } else {
-      console.log(item)
-      axios.post('https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites', item)
-      setFavorites((prev) => [...prev, item])
+  const onFavoriteItemHandler = async (item) => {
+    try {
+      if (favorites.find((favItem) => favItem.id === item.id)) {
+        axios.delete(
+          `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${item.id}`
+        )
+        setFavorites((prev) => prev.filter((favItem) => favItem.id !== item.id))
+      } else {
+        const { data } = await axios.post(
+          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites',
+          item
+        )
+        console.log(data)
+        setFavorites((prev) => [...prev, data])
+      }
+    } catch (error) {
+      alert('Не удалось добавить в закладки')
     }
   }
 

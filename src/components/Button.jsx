@@ -1,4 +1,4 @@
-export default function Button({ text, direction, animation, onClick, type }) {
+export default function Button({ text, direction, onClick, type }) {
   return (
     <button
       type={type}
@@ -7,7 +7,7 @@ export default function Button({ text, direction, animation, onClick, type }) {
     >
       {text}
       <img
-        className={`absolute ${direction} ${animation}`}
+        className={`absolute ${direction}`}
         src="/img/arrow.svg"
         alt={`Arrow`}
       />
