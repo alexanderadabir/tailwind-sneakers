@@ -1,11 +1,11 @@
-import Card from './Card'
+import Card from '../components/Card'
 
-export default function Main({
+export default function Home({
   items,
   searchValue,
-  searchChange,
-  addProduct,
-  deleteProduct,
+  onChangeSearchValue,
+  onAddItem,
+  onFavoriteItem,
 }) {
   return (
     <main className="px-14 py-10">
@@ -23,7 +23,7 @@ export default function Main({
           <div className="relative flex overflow-hidden rounded-xl border px-5">
             <img src="/img/search.svg" alt="Поиск" />
             <input
-              onChange={(e) => searchChange(e.target.value)}
+              onChange={(e) => onChangeSearchValue(e.target.value)}
               value={searchValue}
               className="max-w-[100px] px-2 py-3 text-sm outline-none duration-300 ease-linear focus:max-w-xs"
               placeholder="Поиск..."
@@ -45,12 +45,12 @@ export default function Main({
             .filter((item) =>
               item.text.toLowerCase().includes(searchValue.toLowerCase())
             )
-            .map((item, index) => (
+            .map((item) => (
               <Card
                 {...item}
-                key={index}
-                addProduct={addProduct}
-                deleteProduct={deleteProduct}
+                key={item.id}
+                onAddItem={onAddItem}
+                onFavoriteItem={onFavoriteItem}
               />
             ))}
         </div>

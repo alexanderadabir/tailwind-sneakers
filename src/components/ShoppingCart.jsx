@@ -1,22 +1,34 @@
-import DrawerItem from './DrawerItem'
 import Button from './Button'
+import ShoppingCartItem from './ShoppingCartItem'
 
-export default function Aside({ price, productsCart, deleteProduct }) {
+export default function ShoppingCart({
+  price,
+  shoppingCart,
+  onRemoveItem,
+  onToggleVisibilityShoppingCart,
+}) {
   return (
-    <aside
-      id="aside"
-      className={`fixed top-0 left-0 z-10 h-screen w-full bg-black/50`}
-    >
+    <aside className={`fixed top-0 left-0 z-10 h-screen w-full bg-black/50`}>
       <form
         className={`absolute top-0 right-0 flex h-full min-w-[400px] flex-col bg-white px-8 pt-8 transition-all`}
       >
-        <h2 className="mb-7 text-2xl font-bold">Корзина</h2>
+        <div className="mb-7 flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Корзина</h2>
+          <button type="button" onClick={onToggleVisibilityShoppingCart}>
+            <img
+              width={15}
+              className="rotate-45"
+              src="/img/cross.svg"
+              alt="Закрыть"
+            />
+          </button>
+        </div>
         <div className="flex grow flex-col gap-5">
-          {productsCart.map((product) => (
-            <DrawerItem
-              {...product}
-              key={product.id}
-              deleteProduct={deleteProduct}
+          {shoppingCart.map((item) => (
+            <ShoppingCartItem
+              {...item}
+              key={item.id}
+              onRemoveItem={onRemoveItem}
             />
           ))}
         </div>

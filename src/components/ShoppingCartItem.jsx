@@ -1,5 +1,5 @@
-export default function DrawerItem(props) {
-  const { path, text, price, deleteProduct } = props
+export default function ShoppingCartItem(props) {
+  const { path, text, price, onRemoveItem } = props
   return (
     <div className="flex items-center gap-5 rounded-2xl border p-5">
       <div
@@ -15,10 +15,11 @@ export default function DrawerItem(props) {
       </div>
 
       <button
-        onClick={() => deleteProduct(props)}
+        type="button"
+        onClick={() => onRemoveItem(props)}
         className="opacity-50 duration-300 ease-linear hover:opacity-100 "
       >
-        <img className="drawerBtn" src="/img/btn-remove.svg" alt="Удалить" />
+        <img src="/img/btn-remove.svg" alt="Удалить" />
       </button>
     </div>
   )
