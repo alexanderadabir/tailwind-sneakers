@@ -1,12 +1,14 @@
+import { useContext } from 'react'
+import AppContext from '../AppContext'
 import Card from '../components/Card'
 
 export default function Home({
-  items,
-  searchValue,
   onChangeSearchValue,
   onAddItem,
   onFavoriteItem,
 }) {
+  const { items, searchValue } = useContext(AppContext)
+
   return (
     <main className="px-14 py-10">
       <section>
@@ -38,19 +40,23 @@ export default function Home({
             )}
           </div>
         </div>
-        <div className="flex flex-wrap gap-10">
-          {items
-            .filter((item) =>
-              item.text.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Card
-                {...item}
-                key={item.id}
-                onAddItem={onAddItem}
-                onFavoriteItem={onFavoriteItem}
-              />
-            ))}
+        <div className="flex flex-wrap justify-between gap-10">
+          {!items.length
+            ? [...Array(12)].map((item, index) => (
+                <Card key={index} isLoading />
+              ))
+            : items
+                .filter((item) =>
+                  item.text.toLowerCase().includes(searchValue.toLowerCase())
+                )
+                .map((item) => (
+                  <Card
+                    {...item}
+                    key={item.id}
+                    onAddItem={onAddItem}
+                    onFavoriteItem={onFavoriteItem}
+                  />
+                ))}
         </div>
       </section>
     </main>

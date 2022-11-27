@@ -1,6 +1,9 @@
 import Card from '../components/Card'
+import AppContext from '../AppContext'
+import { useContext } from 'react'
 
-export default function Favorites({ items, onFavoriteItem, onAddItem }) {
+export default function Favorites({ onFavoriteItem, onAddItem }) {
+  const { favorites: items } = useContext(AppContext)
   return (
     <main className="px-14 py-10">
       <section>

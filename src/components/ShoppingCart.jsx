@@ -1,12 +1,14 @@
+import { useContext } from 'react'
+import AppContext from '../AppContext'
 import Button from './Button'
 import ShoppingCartItem from './ShoppingCartItem'
 
 export default function ShoppingCart({
-  price,
-  shoppingCart,
   onRemoveItem,
   onToggleVisibilityShoppingCart,
 }) {
+  const { price, shoppingCart } = useContext(AppContext)
+
   return (
     <aside className={`fixed top-0 left-0 z-10 h-screen w-full bg-black/50`}>
       <form

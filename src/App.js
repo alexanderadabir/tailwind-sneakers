@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
+import AppContext from './AppContext'
+
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
 
@@ -17,19 +19,21 @@ export default function App() {
   const [toggleShoppingCart, setToggleShoppingCart] = useState(false)
 
   useEffect(() => {
-    axios
-      .get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items')
-      .then((res) => {
-        setItems(res.data)
-      })
-
-    axios
-      .get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart')
-      .then((res) => setShoppingCart(res.data))
-
-    axios
-      .get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites')
-      .then((res) => setFavorites(res.data))
+    async function fetchData() {
+      const shoppingCartRes = await axios.get(
+        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart'
+      )
+      const favoritesRes = await axios.get(
+        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites'
+      )
+      const itemsRes = await axios.get(
+        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/items'
+      )
+      setShoppingCart(shoppingCartRes.data)
+      setFavorites(favoritesRes.data)
+      setItems(itemsRes.data)
+    }
+    fetchData()
   }, [])
 
   useEffect(() => {
@@ -80,7 +84,6 @@ export default function App() {
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites',
           item
         )
-        console.log(data)
         setFavorites((prev) => [...prev, data])
       }
     } catch (error) {
@@ -91,51 +94,62 @@ export default function App() {
   const onToggleVisibilityShoppingCartHandler = () =>
     setToggleShoppingCart((prev) => !prev)
 
+  const addedToCart = (id) => {
+    return shoppingCart.some((cartItem) => cartItem.id === id)
+  }
+
   return (
-    <div className="App">
-      <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">
-        <Header
-          price={price}
-          onToggleVisibilityShoppingCart={onToggleVisibilityShoppingCartHandler}
-        />
-
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                items={items}
-                onChangeSearchValue={onChangeSearchValueHandler}
-                searchValue={searchValue}
-                onAddItem={onAddItemHandler}
-                onFavoriteItem={onFavoriteItemHandler}
-              />
-            }
-          />
-
-          <Route
-            path="/favorites"
-            element={
-              <Favorites
-                items={favorites}
-                onAddItem={onAddItemHandler}
-                onFavoriteItem={onFavoriteItemHandler}
-              />
-            }
-          />
-        </Routes>
-
-        {toggleShoppingCart && (
-          <ShoppingCart
-            shoppingCart={shoppingCart}
-            price={price}
-            onRemoveItem={onRemoveItemHandler}
+    <AppContext.Provider
+      value={{
+        favorites,
+        price,
+        items,
+        shoppingCart,
+        searchValue,
+        addedToCart,
+      }}
+    >
+      <div className="App">
+        <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">
+          <Header
             onToggleVisibilityShoppingCart={
               onToggleVisibilityShoppingCartHandler
             }
           />
-        )}
+
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  onChangeSearchValue={onChangeSearchValueHandler}
+                  onAddItem={onAddItemHandler}
+                  onFavoriteItem={onFavoriteItemHandler}
+                />
+              }
+            />
+
+            <Route
+              path="/favorites"
+              element={
+                <Favorites
+                  onAddItem={onAddItemHandler}
+                  onFavoriteItem={onFavoriteItemHandler}
+                />
+              }
+            />
+          </Routes>
+
+          {toggleShoppingCart && (
+            <ShoppingCart
+              onRemoveItem={onRemoveItemHandler}
+              onToggleVisibilityShoppingCart={
+                onToggleVisibilityShoppingCartHandler
+              }
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </AppContext.Provider>
   )
 }
