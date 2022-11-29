@@ -10,20 +10,17 @@ export default function Card(props) {
     price,
     onAddItem,
     onFavoriteItem,
-    taggedFavorite = false,
     isLoading = false,
   } = props
 
-  const { addedToCart } = useContext(AppContext)
-  const [isFavorite, setIsFavorite] = useState(taggedFavorite)
+  const { addedToCart, taggedFavorite } = useContext(AppContext)
 
   const onClickedAdd = () => {
     onAddItem({ text, price, path, itemID })
   }
 
   const onClickedFavorite = () => {
-    onFavoriteItem(props)
-    setIsFavorite((prev) => !prev)
+    onFavoriteItem({ text, price, path, itemID })
   }
 
   if (isLoading) {
@@ -52,7 +49,9 @@ export default function Card(props) {
       <button onClick={onClickedFavorite}>
         <img
           src={
-            isFavorite ? '/img/favorite-like.svg' : '/img/favorite-unlike.svg'
+            taggedFavorite(itemID)
+              ? '/img/favorite-like.svg'
+              : '/img/favorite-unlike.svg'
           }
           alt="Добавить в избранное"
         />

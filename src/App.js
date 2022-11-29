@@ -81,9 +81,15 @@ export default function App() {
   const onFavoriteItemHandler = async (item) => {
     try {
       if (favorites.find((favItem) => favItem.itemID === item.itemID)) {
-        axios.delete(
-          `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${item.id}`
-        )
+        for (let i = 0; i < favorites.length; i++) {
+          if (favorites[i].itemID === item.itemID) {
+            axios.delete(
+              `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${favorites[i].id}`
+            )
+            break
+          }
+        }
+
         setFavorites((prev) =>
           prev.filter((favItem) => favItem.itemID !== item.itemID)
         )
@@ -105,6 +111,11 @@ export default function App() {
   const addedToCart = (id) => {
     return shoppingCart.some((cartItem) => cartItem.itemID === id)
   }
+
+  const taggedFavorite = (id) => {
+    return favorites.some((favItem) => favItem.itemID === id)
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -114,6 +125,7 @@ export default function App() {
         shoppingCart,
         searchValue,
         addedToCart,
+        taggedFavorite,
       }}
     >
       <div className="App">

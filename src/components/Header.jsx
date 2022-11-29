@@ -46,8 +46,8 @@ export default function Header({ onToggleVisibilityShoppingCart }) {
             </Link>
           </li>
           <li>
-            <Link to="/users" title="Личный кабинет">
-              <img width={20} src="/img/user.svg" alt="Личный кабинет" />
+            <Link to="/users" title="Заказы">
+              <img width={20} src="/img/user.svg" alt="Заказы" />
             </Link>
           </li>
         </ul>
