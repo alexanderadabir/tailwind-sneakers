@@ -6,6 +6,7 @@ import AppContext from './AppContext'
 
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
+import Orders from './pages/Orders'
 
 import Header from './components/Header'
 import ShoppingCart from './components/ShoppingCart'
@@ -157,6 +158,8 @@ export default function App() {
                 />
               }
             />
+
+            <Route path="/orders" element={<Orders />} />
           </Routes>
 
           {toggleShoppingCart && (
