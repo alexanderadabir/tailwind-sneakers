@@ -12,7 +12,7 @@ import ShoppingCart from './components/ShoppingCart'
 
 export default function App() {
   const [items, setItems] = useState([])
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState([])
   const [price, setPrice] = useState(0)
   const [shoppingCart, setShoppingCart] = useState([])
   const [favorites, setFavorites] = useState([])
@@ -44,12 +44,18 @@ export default function App() {
 
   const onAddItemHandler = async (item) => {
     try {
-      if (shoppingCart.find((cartItem) => cartItem.id === item.id)) {
-        axios.delete(
-          `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${item.id}`
-        )
+      if (shoppingCart.find((cartItem) => cartItem.itemID === item.itemID)) {
+        for (let i = 0; i < shoppingCart.length; i++) {
+          if (shoppingCart[i].itemID === item.itemID) {
+            axios.delete(
+              `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${shoppingCart[i].id}`
+            )
+            break
+          }
+        }
+
         setShoppingCart((prev) =>
-          prev.filter((cartItem) => cartItem.id !== item.id)
+          prev.filter((cartItem) => cartItem.itemID !== item.itemID)
         )
       } else {
         const { data } = await axios.post(
@@ -68,17 +74,19 @@ export default function App() {
       `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${item.id}`
     )
     setShoppingCart((prev) =>
-      prev.filter((cartItem) => cartItem.id !== item.id)
+      prev.filter((cartItem) => cartItem.itemID !== item.itemID)
     )
   }
 
   const onFavoriteItemHandler = async (item) => {
     try {
-      if (favorites.find((favItem) => favItem.id === item.id)) {
+      if (favorites.find((favItem) => favItem.itemID === item.itemID)) {
         axios.delete(
           `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${item.id}`
         )
-        setFavorites((prev) => prev.filter((favItem) => favItem.id !== item.id))
+        setFavorites((prev) =>
+          prev.filter((favItem) => favItem.itemID !== item.itemID)
+        )
       } else {
         const { data } = await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites',
@@ -95,9 +103,8 @@ export default function App() {
     setToggleShoppingCart((prev) => !prev)
 
   const addedToCart = (id) => {
-    return shoppingCart.some((cartItem) => cartItem.id === id)
+    return shoppingCart.some((cartItem) => cartItem.itemID === id)
   }
-
   return (
     <AppContext.Provider
       value={{

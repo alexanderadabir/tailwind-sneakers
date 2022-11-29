@@ -4,7 +4,7 @@ import AppContext from '../AppContext'
 
 export default function Card(props) {
   const {
-    id,
+    itemID,
     path,
     text,
     price,
@@ -18,7 +18,7 @@ export default function Card(props) {
   const [isFavorite, setIsFavorite] = useState(taggedFavorite)
 
   const onClickedAdd = () => {
-    onAddItem({ text, id, price, path })
+    onAddItem({ text, price, path, itemID })
   }
 
   const onClickedFavorite = () => {
@@ -69,7 +69,9 @@ export default function Card(props) {
 
         <button onClick={onClickedAdd}>
           <img
-            src={addedToCart(id) ? '/img/btn-success.svg' : '/img/btn-plus.svg'}
+            src={
+              addedToCart(itemID) ? '/img/btn-success.svg' : '/img/btn-plus.svg'
+            }
             alt="Добавить в корзину"
           />
         </button>

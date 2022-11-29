@@ -14,7 +14,7 @@ export default function Favorites({ onFavoriteItem, onAddItem }) {
           {items.map((item) => (
             <Card
               {...item}
-              key={item.id}
+              key={item.itemID}
               onAddItem={onAddItem}
               onFavoriteItem={onFavoriteItem}
               taggedFavorite
