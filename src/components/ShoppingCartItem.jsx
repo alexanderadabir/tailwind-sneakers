@@ -19,7 +19,7 @@ export default function ShoppingCartItem(props) {
         onClick={() => onRemoveItem(props)}
         className="opacity-50 duration-300 ease-linear hover:opacity-100 "
       >
-        <img src="/img/btn-remove.svg" alt="Удалить" />
+        <img src="img/btn-remove.svg" alt="Удалить" />
       </button>
     </div>
   )
