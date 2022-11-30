@@ -190,6 +190,7 @@ export default function App() {
           <Routes>
             <Route
               path=""
+              exact
               element={
                 <Home
                   items={items}
@@ -203,6 +204,7 @@ export default function App() {
 
             <Route
               path="favorites"
+              exact
               element={
                 <Favorites
                   items={favorites}
@@ -212,7 +214,7 @@ export default function App() {
               }
             />
 
-            <Route path="orders" element={<Orders order={order} />} />
+            <Route path="orders" exact element={<Orders order={order} />} />
           </Routes>
           <ShoppingCart
             isOrderComplete={isOrderComplete}
