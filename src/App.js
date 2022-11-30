@@ -49,18 +49,16 @@ export default function App() {
 
   const onAddItemHandler = async (item) => {
     try {
-      if (shoppingCart.find((cartItem) => cartItem.itemID === item.itemID)) {
+      const findItem = shoppingCart.find(
+        (cartItem) => cartItem.itemID === item.itemID
+      )
+      if (findItem) {
         setShoppingCart((prev) =>
           prev.filter((cartItem) => cartItem.itemID !== item.itemID)
         )
-        for (let i = 0; i < shoppingCart.length; i++) {
-          if (shoppingCart[i].itemID === item.itemID) {
-            await axios.delete(
-              `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${shoppingCart[i].id}`
-            )
-            break
-          }
-        }
+        await axios.delete(
+          `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${findItem.id}`
+        )
       } else {
         const { data } = await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart',
@@ -116,18 +114,16 @@ export default function App() {
 
   const onFavoriteItemHandler = async (item) => {
     try {
-      if (favorites.find((favItem) => favItem.itemID === item.itemID)) {
+      const findItem = favorites.find(
+        (favItem) => favItem.itemID === item.itemID
+      )
+      if (findItem) {
         setFavorites((prev) =>
           prev.filter((favItem) => favItem.itemID !== item.itemID)
         )
-        for (let i = 0; i < favorites.length; i++) {
-          if (favorites[i].itemID === item.itemID) {
-            await axios.delete(
-              `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${favorites[i].id}`
-            )
-            break
-          }
-        }
+        await axios.delete(
+          `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${findItem.id}`
+        )
       } else {
         const { data } = await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites',
