@@ -61,9 +61,21 @@ export default function App() {
         )
       } else {
         setShoppingCart((prev) => [...prev, item])
-        await axios.post(
+        const { data } = await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart',
           item
+        )
+        setShoppingCart((prev) =>
+          prev.map((cartItem) => {
+            if (cartItem.itemID === data.itemID) {
+              return {
+                ...cartItem,
+                id: data.id,
+              }
+            } else {
+              return cartItem
+            }
+          })
         )
       }
     } catch (error) {
@@ -126,9 +138,21 @@ export default function App() {
         )
       } else {
         setFavorites((prev) => [...prev, item])
-        await axios.post(
+        const { data } = await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites',
           item
+        )
+        setFavorites((prev) =>
+          prev.map((favItem) => {
+            if (favItem.itemID === data.itemID) {
+              return {
+                ...favItem,
+                id: data.id,
+              }
+            } else {
+              return favItem
+            }
+          })
         )
       }
     } catch (error) {
