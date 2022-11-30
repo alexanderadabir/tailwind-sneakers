@@ -1,11 +1,29 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../hooks/useCart'
 
 export default function Header({ onToggleVisibilityShoppingCart }) {
   const { price } = useCart()
 
+  const [color, setColor] = useState('bg-white')
+
+  useEffect(() => {
+    window.addEventListener('scroll', onChangeHeaderColor)
+    return () => window.removeEventListener('scroll', onChangeHeaderColor)
+  }, [])
+
+  function onChangeHeaderColor(event) {
+    if (window.scrollY > 50) {
+      setColor('bg-[#eee]')
+    } else {
+      setColor('bg-white')
+    }
+  }
+
   return (
-    <header className="border-b p-10">
+    <header
+      className={`sticky top-0 left-0 right-0 z-10 border-b ${color} p-10`}
+    >
       <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
         <Link className="group" to="/" title="На главную">
           <div className="flex flex-col items-center gap-3 sm:flex-row">
