@@ -60,11 +60,11 @@ export default function App() {
           `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${findItem.id}`
         )
       } else {
-        const { data } = await axios.post(
+        setShoppingCart((prev) => [...prev, item])
+        await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart',
           item
         )
-        setShoppingCart((prev) => [...prev, data])
       }
     } catch (error) {
       alert('Не удалось добавить в корзину')
@@ -125,11 +125,11 @@ export default function App() {
           `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${findItem.id}`
         )
       } else {
-        const { data } = await axios.post(
+        setFavorites((prev) => [...prev, item])
+        await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites',
           item
         )
-        setFavorites((prev) => [...prev, data])
       }
     } catch (error) {
       alert('Не удалось добавить в закладки')
