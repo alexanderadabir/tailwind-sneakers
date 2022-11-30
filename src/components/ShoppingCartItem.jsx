@@ -1,7 +1,7 @@
 export default function ShoppingCartItem(props) {
   const { path, text, price, onRemoveItem } = props
   return (
-    <div className="flex items-center gap-5 rounded-2xl border p-5">
+    <div className="flex items-center gap-3 rounded-2xl sm:gap-5 sm:border sm:p-5">
       <div
         style={{
           background: `url(${path}) no-repeat center /contain`,

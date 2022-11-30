@@ -1,4 +1,6 @@
 import { useContext } from 'react'
+import { v4 as uuid } from 'uuid'
+
 import AppContext from '../AppContext'
 import Card from '../components/Card'
 
@@ -10,14 +12,14 @@ export default function Home({
   const { items, searchValue } = useContext(AppContext)
 
   return (
-    <main className="px-14 py-10">
+    <main className="p-12">
       <section>
-        <div className="mb-16 flex items-center justify-between">
+        <div className="mb-16 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
           {!!searchValue.length ? (
             <h1 className="basis-2/3 overflow-hidden whitespace-nowrap text-3xl font-bold">
               Поиск:
               <span className="ml-2 text-2xl opacity-40">
-                {searchValue.join(' ')}
+                {`'${searchValue.join(' ')}'`}
               </span>
             </h1>
           ) : (
@@ -26,12 +28,12 @@ export default function Home({
             </h1>
           )}
 
-          <div className="relative flex overflow-hidden rounded-xl border px-5">
-            <img src="/img/search.svg" alt="Поиск" />
+          <div className="relative flex max-w-[200px] overflow-hidden rounded-xl border px-5 duration-1000 ease-in-out focus-within:max-w-full">
+            <img width={15} src="/img/search.svg" alt="Поиск" />
             <input
               onChange={(e) => onChangeSearchValue(e.target.value.split(' '))}
               value={searchValue.join(' ')}
-              className="max-w-[100px] px-2 py-3 text-sm outline-none duration-300 ease-linear focus:max-w-xs"
+              className="px-2 py-3 text-sm outline-none"
               placeholder="Поиск..."
               type="text"
             />
@@ -49,7 +51,7 @@ export default function Home({
             )}
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-10">
+        <div className="flex flex-col flex-wrap gap-10 sm:flex-row lg:grid lg:grid-cols-4">
           {!items.length
             ? [...Array(12)].map((_, index) => <Card key={index} isLoading />)
             : items
@@ -61,7 +63,7 @@ export default function Home({
                 .map((item) => (
                   <Card
                     {...item}
-                    key={item.itemID}
+                    key={uuid()}
                     onAddItem={onAddItem}
                     onFavoriteItem={onFavoriteItem}
                   />

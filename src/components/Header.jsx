@@ -6,12 +6,11 @@ export default function Header({ onToggleVisibilityShoppingCart }) {
 
   return (
     <header className="border-b p-10">
-      <div className="flex justify-between">
-        <Link to="/" title="На главную">
-          <div className="flex items-center gap-3">
+      <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
+        <Link className="group" to="/" title="На главную">
+          <div className="flex flex-col items-center gap-3 sm:flex-row">
             <img
-              width={40}
-              height={40}
+              className="hidden transition-transform duration-700 ease-in-out group-hover:rotate-[360deg] sm:block"
               src="/img/logo.png"
               alt="Интернет-магазин Sneakers"
             />
@@ -32,12 +31,22 @@ export default function Header({ onToggleVisibilityShoppingCart }) {
               className="flex cursor-pointer items-center"
             >
               <img
-                className="mr-2"
+                className={`${
+                  !!price && '-translate-x-2'
+                } transition-transform`}
                 width={20}
                 src="/img/cart.svg"
                 alt="Корзина"
               />
-              <span>{price} ₽</span>
+              <span
+                className={`${
+                  !!price
+                    ? 'visible relative translate-x-0'
+                    : 'invisible absolute translate-x-5'
+                } text-sm transition-transform duration-500 ease-out`}
+              >
+                {price} ₽
+              </span>
             </button>
           </li>
           <li>

@@ -87,6 +87,9 @@ export default function App() {
 
       setOrder([data])
       setIsOrderComplete(true)
+      setTimeout(() => {
+        setIsOrderComplete(false)
+      }, 5000)
 
       for (let i = 0; i < shoppingCart.length; i++) {
         await axios.delete(
@@ -94,10 +97,6 @@ export default function App() {
         )
       }
       setShoppingCart([])
-
-      setTimeout(() => {
-        setIsOrderComplete(false)
-      }, 10000)
     } catch (error) {
       alert('Не удалось сделать заказ')
       console.error(error)
@@ -167,16 +166,16 @@ export default function App() {
         taggedFavorite,
         isOrderComplete,
         order,
+        toggleShoppingCart,
       }}
     >
-      <div className="App">
+      <div className="App xl:p-20">
         <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">
           <Header
             onToggleVisibilityShoppingCart={
               onToggleVisibilityShoppingCartHandler
             }
           />
-
           <Routes>
             <Route
               path="/"
@@ -209,16 +208,13 @@ export default function App() {
               }
             />
           </Routes>
-
-          {toggleShoppingCart && (
-            <ShoppingCart
-              onRemoveItem={onRemoveItemHandler}
-              onToggleVisibilityShoppingCart={
-                onToggleVisibilityShoppingCartHandler
-              }
-              onOrderPlaced={onOrderPlacedHandler}
-            />
-          )}
+          <ShoppingCart
+            onRemoveItem={onRemoveItemHandler}
+            onToggleVisibilityShoppingCart={
+              onToggleVisibilityShoppingCartHandler
+            }
+            onOrderPlaced={onOrderPlacedHandler}
+          />
         </div>
       </div>
     </AppContext.Provider>

@@ -13,7 +13,7 @@ export default function Info({
     <>
       <img className="mb-5" src={img} alt={alt} />
       <h3 className="mb-2 text-2xl font-semibold">{title}</h3>
-      <p className="mb-10 text-center opacity-40">{text}</p>
+      <p className="mb-10 max-w-[285px] text-center opacity-40">{text}</p>
 
       <Link
         title={titleLink}
@@ -23,7 +23,7 @@ export default function Info({
       >
         Вернуться назад
         <img
-          className="absolute left-6 rotate-180"
+          className="absolute left-6 hidden rotate-180 sm:block"
           src="/img/arrow.svg"
           alt="Вернуться назад"
         />
