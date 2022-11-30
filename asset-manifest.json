@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/tailwind-sneakers/static/css/main.30dd0ee2.css",
-    "main.js": "/tailwind-sneakers/static/js/main.967099b4.js",
+    "main.css": "/tailwind-sneakers/static/css/main.69857efc.css",
+    "main.js": "/tailwind-sneakers/static/js/main.d1a27c1a.js",
     "index.html": "/tailwind-sneakers/index.html",
-    "main.30dd0ee2.css.map": "/tailwind-sneakers/static/css/main.30dd0ee2.css.map",
-    "main.967099b4.js.map": "/tailwind-sneakers/static/js/main.967099b4.js.map"
+    "main.69857efc.css.map": "/tailwind-sneakers/static/css/main.69857efc.css.map",
+    "main.d1a27c1a.js.map": "/tailwind-sneakers/static/js/main.d1a27c1a.js.map"
   },
   "entrypoints": [
-    "static/css/main.30dd0ee2.css",
-    "static/js/main.967099b4.js"
+    "static/css/main.69857efc.css",
+    "static/js/main.d1a27c1a.js"
   ]
 }
