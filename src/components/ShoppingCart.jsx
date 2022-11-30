@@ -55,13 +55,17 @@ export default function ShoppingCart({
         ) : (
           <>
             <div className="flex grow flex-col gap-5">
-              {shoppingCart.map((item) => (
-                <ShoppingCartItem
-                  {...item}
-                  key={uuid()}
-                  onRemoveItem={onRemoveItem}
-                />
-              ))}
+              {shoppingCart.map((item, index) => {
+                if (index < 5) {
+                  return (
+                    <ShoppingCartItem
+                      {...item}
+                      key={uuid()}
+                      onRemoveItem={onRemoveItem}
+                    />
+                  )
+                }
+              })}
             </div>
             <div className="flex flex-col gap-5 py-8">
               <div className="flex items-baseline justify-between">

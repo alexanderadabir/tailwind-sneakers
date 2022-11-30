@@ -11,7 +11,7 @@ export default function Info({
 }) {
   return (
     <>
-      <img className="mb-5" src={img} alt={alt} />
+      <img width={70} className="mb-5" src={img} alt={alt} />
       <h3 className="mb-2 text-2xl font-semibold">{title}</h3>
       <p className="mb-10 max-w-[285px] text-center opacity-40">{text}</p>
 
