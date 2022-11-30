@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
+import { BsArrowLeftSquare } from 'react-icons/bs'
 
 import Card from '../components/Card'
 import Info from '../components/Info'
@@ -15,7 +16,7 @@ export default function Favorites({ onFavoriteItem, onAddItem, items }) {
         {!items.length ? (
           <div className="mx-auto flex h-full w-[285px] flex-col items-center justify-center">
             <Info
-              img={'img/sad-smile.png'}
+              img={'/img/sad-smile.png'}
               title="Закладок нет"
               text="Вы ничего не добавляли в закладки"
               alt="Грустный смайл"
@@ -27,11 +28,7 @@ export default function Favorites({ onFavoriteItem, onAddItem, items }) {
           <>
             <div className="mb-16 flex items-center">
               <Link to="/" title="На главную">
-                <img
-                  className="mr-5"
-                  src="img/arrow-back.svg"
-                  alt="Вернуться назад"
-                />
+                <BsArrowLeftSquare className="mr-5 text-2xl text-[#d3d3d3] duration-300 hover:scale-150" />
               </Link>
               <h1 className="text-xl font-bold sm:text-3xl">Мои закладки</h1>
             </div>

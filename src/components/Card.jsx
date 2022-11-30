@@ -1,5 +1,9 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import ContentLoader from 'react-content-loader'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import { IoIosAddCircleOutline, IoIosAddCircle } from 'react-icons/io'
+import { BiRuble } from 'react-icons/bi'
+
 import AppContext from '../AppContext'
 
 export default function Card(props) {
@@ -26,7 +30,7 @@ export default function Card(props) {
 
   if (isLoading) {
     return (
-      <div className="rounded-3xl border border-[#F3F3F3] py-5 px-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#F8F8F8] hover:shadow-md sm:max-w-[210px]">
+      <div className="min-h-[255px] rounded-3xl border border-[#F3F3F3] py-5 px-7 duration-300 hover:border-[#F8F8F8] hover:shadow-md hover:shadow-[#a9d2eb] sm:max-w-[210px]">
         <ContentLoader
           speed={2}
           width={150}
@@ -46,17 +50,17 @@ export default function Card(props) {
   }
 
   return (
-    <div className="min-h-[255px] rounded-3xl border border-[#F3F3F3] py-5 px-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#F8F8F8] hover:shadow-md sm:max-w-[210px]">
+    <div className="min-h-[255px] rounded-3xl border border-[#F3F3F3] py-5 px-7 duration-300 hover:border-[#F8F8F8] hover:shadow-md hover:shadow-[#a9d2eb] sm:max-w-[210px]">
       {addKeys && (
-        <button onClick={onClickedFavorite}>
-          <img
-            src={
-              taggedFavorite(itemID)
-                ? 'img/favorite-like.svg'
-                : 'img/favorite-unlike.svg'
-            }
-            alt="Добавить в избранное"
-          />
+        <button
+          className="scale-100 opacity-100 duration-300 hover:scale-[2] active:scale-[2]"
+          onClick={onClickedFavorite}
+        >
+          {taggedFavorite(itemID) ? (
+            <AiFillHeart className="text-xl text-[#fe6d48]" />
+          ) : (
+            <AiOutlineHeart className="text-xl text-[#d3d3d3]" />
+          )}
         </button>
       )}
 
@@ -67,17 +71,21 @@ export default function Card(props) {
       <div className="flex justify-between">
         <div>
           <h5 className="text-xs uppercase opacity-50">Цена:</h5>
-          <b className="text-sm">{price} ₽</b>
+          <b className="flex items-center text-sm">
+            {price} <BiRuble className="inline-block text-sm opacity-50" />
+          </b>
         </div>
 
         {addKeys && (
-          <button onClick={onClickedAdd}>
-            <img
-              src={
-                addedToCart(itemID) ? 'img/btn-success.svg' : 'img/btn-plus.svg'
-              }
-              alt="Добавить в корзину"
-            />
+          <button
+            className="scale-100 opacity-100 duration-300 hover:scale-[2] active:scale-[2]"
+            onClick={onClickedAdd}
+          >
+            {addedToCart(itemID) ? (
+              <IoIosAddCircle className="text-2xl text-[#50d268]" />
+            ) : (
+              <IoIosAddCircleOutline className="text-2xl text-[#d3d3d3]" />
+            )}
           </button>
         )}
       </div>

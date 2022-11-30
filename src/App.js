@@ -181,7 +181,7 @@ export default function App() {
       }}
     >
       <div className="App xl:p-20">
-        <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white">
+        <div className="container mx-auto max-w-[1080px] rounded-3xl bg-white shadow-xl shadow-[#a9d2eb]">
           <Header
             onToggleVisibilityShoppingCart={
               onToggleVisibilityShoppingCartHandler

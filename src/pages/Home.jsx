@@ -1,4 +1,6 @@
 import { v4 as uuid } from 'uuid'
+import { CiSearch } from 'react-icons/ci'
+import { IoIosClose } from 'react-icons/io'
 
 import Card from '../components/Card'
 
@@ -26,8 +28,8 @@ export default function Home({
             </h1>
           )}
 
-          <div className="relative flex max-w-[200px] overflow-hidden rounded-xl border px-5 duration-1000 ease-in-out focus-within:max-w-full focus-within:border-[#d3eaf2]">
-            <img width={15} src="img/search.svg" alt="Поиск" />
+          <div className="relative flex max-w-[200px] items-center overflow-hidden rounded-xl border px-5 duration-1000 ease-in-out focus-within:max-w-full focus-within:border-[#64b2e8]">
+            <CiSearch className="absolute left-1 text-xl text-[#d3d3d3]" />
             <input
               onChange={(e) => onChangeSearchValue(e.target.value.split(' '))}
               value={searchValue.join(' ')}
@@ -40,11 +42,7 @@ export default function Home({
                 onClick={() => onChangeSearchValue([])}
                 className="group absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer p-2"
               >
-                <img
-                  className="w-3 rotate-45 transition-transform group-hover:scale-150"
-                  src="img/cross.svg"
-                  alt="Очистить"
-                />
+                <IoIosClose className="text-xl text-[#d3d3d3] duration-300 hover:scale-150" />
               </div>
             )}
           </div>

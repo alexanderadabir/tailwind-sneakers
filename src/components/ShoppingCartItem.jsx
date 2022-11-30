@@ -1,7 +1,10 @@
+import { RiDeleteBin2Line } from 'react-icons/ri'
+import { BiRuble } from 'react-icons/bi'
+
 export default function ShoppingCartItem(props) {
   const { path, text, price, onRemoveItem } = props
   return (
-    <div className="flex items-center justify-between gap-3 rounded-2xl sm:gap-5 sm:border sm:p-5">
+    <div className="flex items-center justify-between gap-3 rounded-2xl hover:shadow-sm hover:shadow-[#a9d2eb] sm:gap-5 sm:border sm:p-5">
       <div
         style={{
           background: `url(${path}) no-repeat center /contain`,
@@ -11,16 +14,15 @@ export default function ShoppingCartItem(props) {
 
       <div className="max-w-[150px] text-sm">
         <p>{text}</p>
-        <b>{price} ₽</b>
+        <b className="flex items-center">
+          {price} <BiRuble className="inline-block text-sm opacity-50" />
+        </b>
       </div>
 
-      <button
-        type="button"
+      <RiDeleteBin2Line
         onClick={() => onRemoveItem(props)}
-        className="opacity-50 duration-300 ease-linear hover:opacity-100 "
-      >
-        <img src="img/btn-remove.svg" alt="Удалить" />
-      </button>
+        className="cursor-pointer text-2xl opacity-40 duration-300 hover:scale-150 active:scale-150"
+      />
     </div>
   )
 }

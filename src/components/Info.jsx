@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { BsArrowLeft } from 'react-icons/bs'
 
 export default function Info({
   onClick,
@@ -19,14 +20,10 @@ export default function Info({
         title={titleLink}
         onClick={onClick}
         to={to}
-        className="relative flex h-14 w-full max-w-[245px] items-center justify-center rounded-3xl bg-lime-400 font-medium text-white transition-colors duration-300 ease-linear hover:bg-lime-500 active:bg-lime-600"
+        className="relative flex h-14 w-full max-w-[245px] items-center justify-center rounded-3xl bg-[#50d268] font-medium text-white transition-colors duration-300 ease-linear hover:bg-[#2d8f3f]"
       >
         Вернуться назад
-        <img
-          className="absolute left-6 hidden rotate-180 sm:block"
-          src="img/arrow.svg"
-          alt="Вернуться назад"
-        />
+        <BsArrowLeft className="absolute left-4 hidden animate-pulse text-xl sm:block" />
       </Link>
     </>
   )

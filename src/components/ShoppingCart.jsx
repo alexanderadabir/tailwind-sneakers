@@ -1,4 +1,8 @@
 import { v4 as uuid } from 'uuid'
+import { BsArrowRight } from 'react-icons/bs'
+import { BiRuble } from 'react-icons/bi'
+import { BsPercent } from 'react-icons/bs'
+import { IoIosClose } from 'react-icons/io'
 
 import { useCart } from '../hooks/useCart'
 import Info from './Info'
@@ -28,22 +32,19 @@ export default function ShoppingCart({
         <div className="mb-7 flex items-center justify-between">
           <h2 className="text-2xl font-bold">Корзина</h2>
           <button type="button" onClick={onToggleVisibilityShoppingCart}>
-            <img
-              width={15}
-              className="rotate-45"
-              src="img/cross.svg"
-              alt="Закрыть"
-            />
+            <IoIosClose className="text-3xl text-[#d3d3d3] duration-300 hover:scale-150" />
           </button>
         </div>
         {!shoppingCart.length ? (
           <div className="flex h-full flex-col items-center justify-center">
             <Info
-              img={isOrderComplete ? 'img/success-order.png' : 'img/basket.png'}
+              img={
+                isOrderComplete ? '/img/success-order.png' : '/img/basket.png'
+              }
               title={isOrderComplete ? 'Заказ оформлен!' : 'Корзина пустая'}
               text={
                 isOrderComplete
-                  ? `Ваш заказ №${orderNumber} скоро будет передан курьерской доставке`
+                  ? `Ваш заказ ${orderNumber} скоро будет передан курьерской доставке`
                   : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'
               }
               onClick={onToggleVisibilityShoppingCart}
@@ -71,18 +72,28 @@ export default function ShoppingCart({
               <div className="flex items-baseline justify-between">
                 <p>Итого:</p>
                 <span className="relative w-1/2 border-b border-dashed"></span>
-                <b>{price} ₽</b>
+                <b className="flex items-center">
+                  {price}{' '}
+                  <BiRuble className="inline-block text-sm opacity-50" />
+                </b>
               </div>
               <div className="flex items-baseline justify-between">
-                <p>Налог 5%:</p>
+                <p>
+                  Налог 5
+                  <BsPercent className="inline-block text-sm opacity-50" />:
+                </p>
                 <span className="relative w-1/2 border-b border-dashed"></span>
-                <b>{Math.floor((price / 100) * 5)} ₽</b>
+                <b className="flex items-center">
+                  {Math.floor((price / 100) * 5)}{' '}
+                  <BiRuble className="inline-block text-sm opacity-50" />
+                </b>
               </div>
               <button
                 type="submit"
-                className="rounded-3xl bg-lime-400 py-4 font-semibold text-white duration-300 hover:bg-lime-500"
+                className="relative flex items-center justify-center rounded-3xl bg-[#50d268] py-4 font-semibold text-white duration-300 hover:bg-[#2d8f3f]"
               >
                 Оформить заказ
+                <BsArrowRight className="absolute right-8 animate-pulse text-xl" />
               </button>
             </div>
           </>

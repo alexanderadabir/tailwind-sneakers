@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
+import { BsArrowLeftSquare } from 'react-icons/bs'
 
 import Info from '../components/Info'
 import Card from '../components/Card'
@@ -17,7 +18,7 @@ export default function Orders({ order }) {
         {!items.length ? (
           <div className="mx-auto flex h-full w-[285px] flex-col items-center justify-center">
             <Info
-              img={'img/sad-smile-2.png'}
+              img={'/img/sad-smile-2.png'}
               title="У вас нет заказов"
               text="Оформите хотя бы один заказ"
               alt="Грустный смайл"
@@ -29,11 +30,7 @@ export default function Orders({ order }) {
           <>
             <div className="mb-16 flex items-center">
               <Link to="/" title="На главную">
-                <img
-                  className="mr-5"
-                  src="img/arrow-back.svg"
-                  alt="Вернуться назад"
-                />
+                <BsArrowLeftSquare className="mr-5 text-2xl text-[#d3d3d3] duration-300 hover:scale-150" />
               </Link>
               <h1 className="text-xl font-bold sm:text-3xl">Мои заказы</h1>
             </div>

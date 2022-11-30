@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { BsCart2, BsBasket } from 'react-icons/bs'
+import { AiOutlineHeart } from 'react-icons/ai'
+import { BiRuble } from 'react-icons/bi'
+
 import { useCart } from '../hooks/useCart'
 
 export default function Header({ onToggleVisibilityShoppingCart }) {
@@ -14,7 +18,7 @@ export default function Header({ onToggleVisibilityShoppingCart }) {
 
   function onChangeHeaderColor(event) {
     if (window.scrollY > 50) {
-      setColor('bg-[#d3eaf2]')
+      setColor('bg-[#bbe2f0]')
     } else {
       setColor('bg-white rounded-t-3xl')
     }
@@ -22,14 +26,14 @@ export default function Header({ onToggleVisibilityShoppingCart }) {
 
   return (
     <header
-      className={`sticky top-0 left-0 right-0 z-10 rounded-b-3xl border-b ${color} p-10`}
+      className={`sticky top-0 left-0 right-0 z-10 rounded-b-3xl border-b shadow-md shadow-[#e7f6ff] transition-colors duration-500 ${color} p-10`}
     >
       <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
         <Link className="group" to="/" title="На главную">
           <div className="flex flex-col items-center gap-3 sm:flex-row">
             <img
               className="hidden transition-transform duration-700 ease-in-out group-hover:rotate-[360deg] sm:block"
-              src="img/logo.png"
+              src="/img/logo.png"
               alt="Интернет-магазин Sneakers"
             />
 
@@ -41,43 +45,42 @@ export default function Header({ onToggleVisibilityShoppingCart }) {
             </div>
           </div>
         </Link>
-        <ul className="flex items-center gap-7">
-          <li>
-            <button
-              onClick={onToggleVisibilityShoppingCart}
-              title="Корзина"
-              className="flex cursor-pointer items-center"
+        <div className="flex items-center gap-7">
+          <button
+            onClick={onToggleVisibilityShoppingCart}
+            title="Корзина"
+            className="flex cursor-pointer items-center text-xl hover:text-[#fe6d48]"
+          >
+            <BsCart2
+              className={`${
+                !!price && '-translate-x-2'
+              } opacity-40 transition-transform duration-300 hover:scale-150 active:scale-150`}
+            />
+            <span
+              className={`${
+                !!price
+                  ? 'visible relative translate-x-0'
+                  : 'invisible absolute translate-x-5'
+              } flex items-center text-sm transition-transform duration-500 ease-out`}
             >
-              <img
-                className={`${
-                  !!price && '-translate-x-2'
-                } transition-transform`}
-                width={20}
-                src="img/cart.svg"
-                alt="Корзина"
-              />
-              <span
-                className={`${
-                  !!price
-                    ? 'visible relative translate-x-0'
-                    : 'invisible absolute translate-x-5'
-                } text-sm transition-transform duration-500 ease-out`}
-              >
-                {price} ₽
-              </span>
-            </button>
-          </li>
-          <li>
-            <Link to="/favorites" title="Закладки">
-              <img width={20} src="img/favorite.svg" alt="Закладки" />
-            </Link>
-          </li>
-          <li>
-            <Link to="/orders" title="Заказы">
-              <img width={20} src="img/user.svg" alt="Заказы" />
-            </Link>
-          </li>
-        </ul>
+              {price} <BiRuble className="inline-block text-sm opacity-50" />
+            </span>
+          </button>
+          <Link
+            className="text-xl hover:text-[#fe6d48]"
+            to="/favorites"
+            title="Закладки"
+          >
+            <AiOutlineHeart className="opacity-40 duration-300 hover:scale-150 active:scale-150" />
+          </Link>
+          <Link
+            className="text-xl hover:text-[#fe6d48]"
+            to="/orders"
+            title="Заказы"
+          >
+            <BsBasket className="opacity-40 duration-300 hover:scale-150 active:scale-150" />
+          </Link>
+        </div>
       </div>
     </header>
   )
