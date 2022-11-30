@@ -189,7 +189,7 @@ export default function App() {
           />
           <Routes>
             <Route
-              path="/"
+              path=""
               element={
                 <Home
                   items={items}
@@ -202,7 +202,7 @@ export default function App() {
             />
 
             <Route
-              path="/favorites"
+              path="favorites"
               element={
                 <Favorites
                   items={favorites}
@@ -212,7 +212,7 @@ export default function App() {
               }
             />
 
-            <Route path="/orders" element={<Orders order={order} />} />
+            <Route path="orders" element={<Orders order={order} />} />
           </Routes>
           <ShoppingCart
             isOrderComplete={isOrderComplete}
