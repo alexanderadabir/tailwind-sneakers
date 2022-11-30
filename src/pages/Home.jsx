@@ -26,7 +26,7 @@ export default function Home({
             </h1>
           )}
 
-          <div className="relative flex max-w-[200px] overflow-hidden rounded-xl border px-5 duration-1000 ease-in-out focus-within:max-w-full">
+          <div className="relative flex max-w-[200px] overflow-hidden rounded-xl border px-5 duration-1000 ease-in-out focus-within:max-w-full focus-within:border-[#d3eaf2]">
             <img width={15} src="img/search.svg" alt="Поиск" />
             <input
               onChange={(e) => onChangeSearchValue(e.target.value.split(' '))}

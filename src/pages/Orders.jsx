@@ -15,7 +15,7 @@ export default function Orders({ order }) {
     >
       <section className="h-full">
         {!items.length ? (
-          <div className="mx-auto flex h-full max-w-[285px] flex-col items-center justify-center">
+          <div className="mx-auto flex h-full w-[285px] flex-col items-center justify-center">
             <Info
               img={'img/sad-smile-2.png'}
               title="У вас нет заказов"

@@ -5,7 +5,7 @@ import { useCart } from '../hooks/useCart'
 export default function Header({ onToggleVisibilityShoppingCart }) {
   const { price } = useCart()
 
-  const [color, setColor] = useState('bg-white')
+  const [color, setColor] = useState('bg-white rounded-t-3xl')
 
   useEffect(() => {
     window.addEventListener('scroll', onChangeHeaderColor)
@@ -14,15 +14,15 @@ export default function Header({ onToggleVisibilityShoppingCart }) {
 
   function onChangeHeaderColor(event) {
     if (window.scrollY > 50) {
-      setColor('bg-[#eee]')
+      setColor('bg-[#d3eaf2]')
     } else {
-      setColor('bg-white')
+      setColor('bg-white rounded-t-3xl')
     }
   }
 
   return (
     <header
-      className={`sticky top-0 left-0 right-0 z-10 border-b ${color} p-10`}
+      className={`sticky top-0 left-0 right-0 z-10 rounded-b-3xl border-b ${color} p-10`}
     >
       <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:text-left">
         <Link className="group" to="/" title="На главную">

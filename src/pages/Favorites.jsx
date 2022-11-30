@@ -13,7 +13,7 @@ export default function Favorites({ onFavoriteItem, onAddItem, items }) {
     >
       <section className="h-full">
         {!items.length ? (
-          <div className="mx-auto flex h-full max-w-[285px] flex-col items-center justify-center">
+          <div className="mx-auto flex h-full w-[285px] flex-col items-center justify-center">
             <Info
               img={'img/sad-smile.png'}
               title="Закладок нет"
