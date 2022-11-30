@@ -1,16 +1,14 @@
-import { useContext } from 'react'
 import { v4 as uuid } from 'uuid'
 
-import AppContext from '../AppContext'
 import Card from '../components/Card'
 
 export default function Home({
   onChangeSearchValue,
   onAddItem,
   onFavoriteItem,
+  items,
+  searchValue,
 }) {
-  const { items, searchValue } = useContext(AppContext)
-
   return (
     <main className="p-12">
       <section>

@@ -25,7 +25,6 @@ export default function Card(props) {
   }
 
   if (isLoading) {
-    // max-w-[210px]
     return (
       <div className="rounded-3xl border border-[#F3F3F3] py-5 px-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#F8F8F8] hover:shadow-md sm:max-w-[210px]">
         <ContentLoader
@@ -47,7 +46,7 @@ export default function Card(props) {
   }
 
   return (
-    <div className="rounded-3xl border border-[#F3F3F3] py-5 px-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#F8F8F8] hover:shadow-md sm:max-w-[210px]">
+    <div className="min-h-[255px] rounded-3xl border border-[#F3F3F3] py-5 px-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#F8F8F8] hover:shadow-md sm:max-w-[210px]">
       {addKeys && (
         <button onClick={onClickedFavorite}>
           <img

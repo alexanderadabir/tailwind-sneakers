@@ -1,17 +1,17 @@
-import { useContext } from 'react'
 import { v4 as uuid } from 'uuid'
 
-import AppContext from '../AppContext'
 import { useCart } from '../hooks/useCart'
 import Info from './Info'
 import ShoppingCartItem from './ShoppingCartItem'
 
 export default function ShoppingCart({
+  toggleShoppingCart,
   onRemoveItem,
   onToggleVisibilityShoppingCart,
   onOrderPlaced,
+  isOrderComplete,
+  order,
 }) {
-  const { isOrderComplete, toggleShoppingCart, order } = useContext(AppContext)
   const { price, shoppingCart } = useCart()
   const orderNumber = order.reduce((_, obj) => ({ ...obj }), {}).id
 

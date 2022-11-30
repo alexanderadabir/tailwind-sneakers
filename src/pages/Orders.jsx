@@ -1,13 +1,10 @@
-import { useContext } from 'react'
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
 
-import AppContext from '../AppContext'
 import Info from '../components/Info'
 import Card from '../components/Card'
 
-export default function Orders({ onAddItem, onFavoriteItem }) {
-  const { order } = useContext(AppContext)
+export default function Orders({ order }) {
   const items = order.map((obj) => obj.items).flat()
 
   return (
@@ -42,14 +39,7 @@ export default function Orders({ onAddItem, onFavoriteItem }) {
             </div>
             <div className="flex flex-wrap gap-10">
               {items.map((item) => (
-                <Card
-                  {...item}
-                  key={uuid()}
-                  onAddItem={onAddItem}
-                  onFavoriteItem={onFavoriteItem}
-                  addKeys={false}
-                  taggedFavorite
-                />
+                <Card {...item} key={uuid()} addKeys={false} taggedFavorite />
               ))}
             </div>
           </>

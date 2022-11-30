@@ -1,13 +1,10 @@
-import { useContext } from 'react'
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
 
 import Card from '../components/Card'
-import AppContext from '../AppContext'
 import Info from '../components/Info'
 
-export default function Favorites({ onFavoriteItem, onAddItem }) {
-  const { favorites: items } = useContext(AppContext)
+export default function Favorites({ onFavoriteItem, onAddItem, items }) {
   return (
     <main
       className={`flex min-h-[calc(100vh_-_175px)] items-center sm:min-h-[calc(100vh_-_133px)] xl:min-h-[calc(100vh_-_45vh)] ${

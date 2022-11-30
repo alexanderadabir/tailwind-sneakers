@@ -21,30 +21,28 @@ export default function App() {
   const [isOrderComplete, setIsOrderComplete] = useState(false)
 
   useEffect(() => {
-    try {
-      async function fetchData() {
-        const shoppingCartRes = await axios.get(
-          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart'
-        )
-        const favoritesRes = await axios.get(
-          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites'
-        )
-        const itemsRes = await axios.get(
-          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/items'
-        )
-        const orderRes = await axios.get(
-          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/order'
-        )
+    async function fetchData() {
+      try {
+        const [shoppingCartRes, favoritesRes, itemsRes, orderRes] =
+          await Promise.all([
+            axios.get(
+              'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart'
+            ),
+            axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites'),
+            axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/items'),
+            axios.get('https://637cbe8e72f3ce38eaac43cb.mockapi.io/order'),
+          ])
+
         setShoppingCart(shoppingCartRes.data)
         setFavorites(favoritesRes.data)
         setItems(itemsRes.data)
         setOrder(orderRes.data)
+      } catch (error) {
+        alert('Не удалось загрузить данные с сервера')
+        console.error(error)
       }
-      fetchData()
-    } catch (error) {
-      alert('Не удалось получить данные с сервера')
-      console.error(error)
     }
+    fetchData()
   }, [])
 
   const onChangeSearchValueHandler = (value) => setSearchValue(value)
@@ -52,18 +50,17 @@ export default function App() {
   const onAddItemHandler = async (item) => {
     try {
       if (shoppingCart.find((cartItem) => cartItem.itemID === item.itemID)) {
+        setShoppingCart((prev) =>
+          prev.filter((cartItem) => cartItem.itemID !== item.itemID)
+        )
         for (let i = 0; i < shoppingCart.length; i++) {
           if (shoppingCart[i].itemID === item.itemID) {
-            axios.delete(
+            await axios.delete(
               `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${shoppingCart[i].id}`
             )
             break
           }
         }
-
-        setShoppingCart((prev) =>
-          prev.filter((cartItem) => cartItem.itemID !== item.itemID)
-        )
       } else {
         const { data } = await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart',
@@ -80,16 +77,17 @@ export default function App() {
   const onOrderPlacedHandler = async (e) => {
     try {
       e.preventDefault()
-      const { data } = await axios.post(
-        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/order',
-        { items: [...shoppingCart] }
-      )
 
-      setOrder([data])
       setIsOrderComplete(true)
       setTimeout(() => {
         setIsOrderComplete(false)
       }, 5000)
+
+      const { data } = await axios.post(
+        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/order',
+        { items: [...shoppingCart] }
+      )
+      setOrder([data])
 
       for (let i = 0; i < shoppingCart.length; i++) {
         await axios.delete(
@@ -103,13 +101,13 @@ export default function App() {
     }
   }
 
-  const onRemoveItemHandler = (item) => {
+  const onRemoveItemHandler = async (item) => {
     try {
-      axios.delete(
-        `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${item.id}`
-      )
       setShoppingCart((prev) =>
         prev.filter((cartItem) => cartItem.itemID !== item.itemID)
+      )
+      await axios.delete(
+        `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${item.id}`
       )
     } catch (error) {
       alert('Не удалось удалить заказ из корзины')
@@ -119,18 +117,17 @@ export default function App() {
   const onFavoriteItemHandler = async (item) => {
     try {
       if (favorites.find((favItem) => favItem.itemID === item.itemID)) {
+        setFavorites((prev) =>
+          prev.filter((favItem) => favItem.itemID !== item.itemID)
+        )
         for (let i = 0; i < favorites.length; i++) {
           if (favorites[i].itemID === item.itemID) {
-            axios.delete(
+            await axios.delete(
               `https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites/${favorites[i].id}`
             )
             break
           }
         }
-
-        setFavorites((prev) =>
-          prev.filter((favItem) => favItem.itemID !== item.itemID)
-        )
       } else {
         const { data } = await axios.post(
           'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites',
@@ -158,15 +155,9 @@ export default function App() {
   return (
     <AppContext.Provider
       value={{
-        favorites,
-        items,
         shoppingCart,
-        searchValue,
         addedToCart,
         taggedFavorite,
-        isOrderComplete,
-        order,
-        toggleShoppingCart,
       }}
     >
       <div className="App xl:p-20">
@@ -181,9 +172,11 @@ export default function App() {
               path="/"
               element={
                 <Home
+                  items={items}
                   onChangeSearchValue={onChangeSearchValueHandler}
                   onAddItem={onAddItemHandler}
                   onFavoriteItem={onFavoriteItemHandler}
+                  searchValue={searchValue}
                 />
               }
             />
@@ -192,23 +185,19 @@ export default function App() {
               path="/favorites"
               element={
                 <Favorites
+                  items={favorites}
                   onAddItem={onAddItemHandler}
                   onFavoriteItem={onFavoriteItemHandler}
                 />
               }
             />
 
-            <Route
-              path="/orders"
-              element={
-                <Orders
-                  onAddItem={onAddItemHandler}
-                  onFavoriteItem={onFavoriteItemHandler}
-                />
-              }
-            />
+            <Route path="/orders" element={<Orders order={order} />} />
           </Routes>
           <ShoppingCart
+            isOrderComplete={isOrderComplete}
+            order={order}
+            toggleShoppingCart={toggleShoppingCart}
             onRemoveItem={onRemoveItemHandler}
             onToggleVisibilityShoppingCart={
               onToggleVisibilityShoppingCartHandler
