@@ -1,17 +1,27 @@
 import { useContext } from 'react'
 import AppContext from '../AppContext'
+import { useCart } from '../hooks/useCart'
 import Info from './Info'
 import ShoppingCartItem from './ShoppingCartItem'
 
 export default function ShoppingCart({
   onRemoveItem,
   onToggleVisibilityShoppingCart,
+  onOrderPlaced,
 }) {
-  const { price, shoppingCart } = useContext(AppContext)
+  const { isOrderComplete, order } = useContext(AppContext)
+  const { price, shoppingCart } = useCart()
+  const orderNumber = order.reduce(
+    (_, obj) => ({
+      ...obj,
+    }),
+    {}
+  ).id
 
   return (
     <aside className={`fixed top-0 left-0 z-10 h-screen w-full bg-black/50`}>
       <form
+        onSubmit={(e) => onOrderPlaced(e)}
         className={`absolute top-0 right-0 flex h-full w-full max-w-[400px] flex-col bg-white px-8 pt-8 transition-all`}
       >
         <div className="mb-7 flex items-center justify-between">
@@ -28,9 +38,15 @@ export default function ShoppingCart({
         {!shoppingCart.length ? (
           <div className="flex h-full max-w-[285px] flex-col items-center justify-center">
             <Info
-              img={'/img/basket.png'}
-              title="Корзина пустая"
-              text="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+              img={
+                isOrderComplete ? '/img/success-order.png' : '/img/basket.png'
+              }
+              title={isOrderComplete ? 'Заказ оформлен!' : 'Корзина пустая'}
+              text={
+                isOrderComplete
+                  ? `Ваш заказ №${orderNumber} скоро будет передан курьерской доставке`
+                  : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'
+              }
               onClick={onToggleVisibilityShoppingCart}
               alt="Пустая корзина"
               titleLink="Закрыть корзину"
@@ -60,7 +76,7 @@ export default function ShoppingCart({
                 <b>{Math.floor((price / 100) * 5)} ₽</b>
               </div>
               <button
-                type="button"
+                type="submit"
                 className="rounded-3xl bg-lime-400 py-4 font-semibold text-white duration-300 hover:bg-lime-500"
               >
                 Оформить заказ

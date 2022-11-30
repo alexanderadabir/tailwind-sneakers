@@ -1,9 +1,9 @@
-import { useContext } from 'react'
-import AppContext from '../AppContext'
 import { Link } from 'react-router-dom'
+import { useCart } from '../hooks/useCart'
 
 export default function Header({ onToggleVisibilityShoppingCart }) {
-  const { price } = useContext(AppContext)
+  const { price } = useCart()
+
   return (
     <header className="border-b p-10">
       <div className="flex justify-between">

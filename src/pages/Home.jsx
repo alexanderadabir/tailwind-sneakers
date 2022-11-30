@@ -51,9 +51,7 @@ export default function Home({
         </div>
         <div className="grid grid-cols-4 gap-10">
           {!items.length
-            ? [...Array(12)].map((item, index) => (
-                <Card key={index} isLoading />
-              ))
+            ? [...Array(12)].map((_, index) => <Card key={index} isLoading />)
             : items
                 .filter((item) =>
                   searchValue.every((value) =>

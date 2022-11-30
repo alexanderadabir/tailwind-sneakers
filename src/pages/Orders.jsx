@@ -1,6 +1,12 @@
-import Info from '../components/Info'
+import { useContext } from 'react'
+import AppContext from '../AppContext'
 
-export default function Orders() {
+import Info from '../components/Info'
+import Card from '../components/Card'
+
+export default function Orders({ onAddItem, onFavoriteItem }) {
+  const { order } = useContext(AppContext)
+  const items = order.map((obj) => obj.items).flat()
   return (
     <main className="px-14 py-10">
       <section className="min-h-[calc(100vh_-_45vh)]">
@@ -8,24 +14,15 @@ export default function Orders() {
           <h1 className="text-3xl font-bold">Мои заказы</h1>
         </div>
 
-        <div className="mx-auto flex min-h-[calc(100vh_-_65vh)] max-w-[285px] flex-col items-center justify-center">
-          <Info
-            img={'/img/sad-smile-2.png'}
-            title="У вас нет заказов"
-            text="Оформите хотя бы один заказ"
-            alt="Грустный смайл"
-            titleLink="На главную"
-            to="/"
-          />
-        </div>
-        {/* {!items.length ? (
-          <div className="mx-auto flex h-1/2 max-w-[285px] flex-col items-center justify-center">
+        {!items.length ? (
+          <div className="mx-auto flex min-h-[calc(100vh_-_65vh)] max-w-[285px] flex-col items-center justify-center">
             <Info
               img={'/img/sad-smile-2.png'}
               title="У вас нет заказов"
               text="Оформите хотя бы один заказ"
               alt="Грустный смайл"
-              to="На главную"
+              titleLink="На главную"
+              to="/"
             />
           </div>
         ) : (
@@ -40,7 +37,7 @@ export default function Orders() {
               />
             ))}
           </div>
-        )} */}
+        )}
       </section>
     </main>
   )

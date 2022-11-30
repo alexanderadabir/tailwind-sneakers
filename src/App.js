@@ -14,32 +14,38 @@ import ShoppingCart from './components/ShoppingCart'
 export default function App() {
   const [items, setItems] = useState([])
   const [searchValue, setSearchValue] = useState([])
-  const [price, setPrice] = useState(0)
   const [shoppingCart, setShoppingCart] = useState([])
   const [favorites, setFavorites] = useState([])
   const [toggleShoppingCart, setToggleShoppingCart] = useState(false)
+  const [order, setOrder] = useState([])
+  const [isOrderComplete, setIsOrderComplete] = useState(false)
 
   useEffect(() => {
-    async function fetchData() {
-      const shoppingCartRes = await axios.get(
-        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart'
-      )
-      const favoritesRes = await axios.get(
-        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites'
-      )
-      const itemsRes = await axios.get(
-        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/items'
-      )
-      setShoppingCart(shoppingCartRes.data)
-      setFavorites(favoritesRes.data)
-      setItems(itemsRes.data)
+    try {
+      async function fetchData() {
+        const shoppingCartRes = await axios.get(
+          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart'
+        )
+        const favoritesRes = await axios.get(
+          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/favorites'
+        )
+        const itemsRes = await axios.get(
+          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/items'
+        )
+        const orderRes = await axios.get(
+          'https://637cbe8e72f3ce38eaac43cb.mockapi.io/order'
+        )
+        setShoppingCart(shoppingCartRes.data)
+        setFavorites(favoritesRes.data)
+        setItems(itemsRes.data)
+        setOrder(orderRes.data)
+      }
+      fetchData()
+    } catch (error) {
+      alert('Не удалось получить данные с сервера')
+      console.error(error)
     }
-    fetchData()
   }, [])
-
-  useEffect(() => {
-    setPrice(shoppingCart.reduce((sum, cartItem) => (sum += cartItem.price), 0))
-  }, [shoppingCart])
 
   const onChangeSearchValueHandler = (value) => setSearchValue(value)
 
@@ -67,16 +73,48 @@ export default function App() {
       }
     } catch (error) {
       alert('Не удалось добавить в корзину')
+      console.error(error)
+    }
+  }
+
+  const onOrderPlacedHandler = async (e) => {
+    try {
+      e.preventDefault()
+      const { data } = await axios.post(
+        'https://637cbe8e72f3ce38eaac43cb.mockapi.io/order',
+        { items: [...shoppingCart] }
+      )
+
+      setOrder([data])
+      setIsOrderComplete(true)
+
+      for (let i = 0; i < shoppingCart.length; i++) {
+        await axios.delete(
+          `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${shoppingCart[i].id}`
+        )
+      }
+      setShoppingCart([])
+
+      setTimeout(() => {
+        setIsOrderComplete(false)
+      }, 10000)
+    } catch (error) {
+      alert('Не удалось сделать заказ')
+      console.error(error)
     }
   }
 
   const onRemoveItemHandler = (item) => {
-    axios.delete(
-      `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${item.id}`
-    )
-    setShoppingCart((prev) =>
-      prev.filter((cartItem) => cartItem.itemID !== item.itemID)
-    )
+    try {
+      axios.delete(
+        `https://637cbe8e72f3ce38eaac43cb.mockapi.io/ShoppingCart/${item.id}`
+      )
+      setShoppingCart((prev) =>
+        prev.filter((cartItem) => cartItem.itemID !== item.itemID)
+      )
+    } catch (error) {
+      alert('Не удалось удалить заказ из корзины')
+    }
   }
 
   const onFavoriteItemHandler = async (item) => {
@@ -103,6 +141,7 @@ export default function App() {
       }
     } catch (error) {
       alert('Не удалось добавить в закладки')
+      console.error(error)
     }
   }
 
@@ -121,12 +160,13 @@ export default function App() {
     <AppContext.Provider
       value={{
         favorites,
-        price,
         items,
         shoppingCart,
         searchValue,
         addedToCart,
         taggedFavorite,
+        isOrderComplete,
+        order,
       }}
     >
       <div className="App">
@@ -159,7 +199,15 @@ export default function App() {
               }
             />
 
-            <Route path="/orders" element={<Orders />} />
+            <Route
+              path="/orders"
+              element={
+                <Orders
+                  onAddItem={onAddItemHandler}
+                  onFavoriteItem={onFavoriteItemHandler}
+                />
+              }
+            />
           </Routes>
 
           {toggleShoppingCart && (
@@ -168,6 +216,7 @@ export default function App() {
               onToggleVisibilityShoppingCart={
                 onToggleVisibilityShoppingCartHandler
               }
+              onOrderPlaced={onOrderPlacedHandler}
             />
           )}
         </div>
