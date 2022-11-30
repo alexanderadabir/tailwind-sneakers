@@ -27,7 +27,7 @@ export default function Home({
           )}
 
           <div className="relative flex max-w-[200px] overflow-hidden rounded-xl border px-5 duration-1000 ease-in-out focus-within:max-w-full">
-            <img width={15} src="/img/search.svg" alt="Поиск" />
+            <img width={15} src="img/search.svg" alt="Поиск" />
             <input
               onChange={(e) => onChangeSearchValue(e.target.value.split(' '))}
               value={searchValue.join(' ')}
@@ -42,7 +42,7 @@ export default function Home({
               >
                 <img
                   className="w-3 rotate-45 transition-transform group-hover:scale-150"
-                  src="/img/cross.svg"
+                  src="img/cross.svg"
                   alt="Очистить"
                 />
               </div>

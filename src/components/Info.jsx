@@ -24,7 +24,7 @@ export default function Info({
         Вернуться назад
         <img
           className="absolute left-6 hidden rotate-180 sm:block"
-          src="/img/arrow.svg"
+          src="img/arrow.svg"
           alt="Вернуться назад"
         />
       </Link>

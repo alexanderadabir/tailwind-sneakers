@@ -17,7 +17,7 @@ export default function Orders({ order }) {
         {!items.length ? (
           <div className="mx-auto flex h-full max-w-[285px] flex-col items-center justify-center">
             <Info
-              img={'/img/sad-smile-2.png'}
+              img={'img/sad-smile-2.png'}
               title="У вас нет заказов"
               text="Оформите хотя бы один заказ"
               alt="Грустный смайл"
@@ -31,7 +31,7 @@ export default function Orders({ order }) {
               <Link to="/" title="На главную">
                 <img
                   className="mr-5"
-                  src="/img/arrow-back.svg"
+                  src="img/arrow-back.svg"
                   alt="Вернуться назад"
                 />
               </Link>

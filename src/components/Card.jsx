@@ -52,8 +52,8 @@ export default function Card(props) {
           <img
             src={
               taggedFavorite(itemID)
-                ? '/img/favorite-like.svg'
-                : '/img/favorite-unlike.svg'
+                ? 'img/favorite-like.svg'
+                : 'img/favorite-unlike.svg'
             }
             alt="Добавить в избранное"
           />
@@ -74,9 +74,7 @@ export default function Card(props) {
           <button onClick={onClickedAdd}>
             <img
               src={
-                addedToCart(itemID)
-                  ? '/img/btn-success.svg'
-                  : '/img/btn-plus.svg'
+                addedToCart(itemID) ? 'img/btn-success.svg' : 'img/btn-plus.svg'
               }
               alt="Добавить в корзину"
             />
