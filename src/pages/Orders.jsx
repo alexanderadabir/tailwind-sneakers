@@ -18,7 +18,7 @@ export default function Orders({ order }) {
         {!items.length ? (
           <div className="mx-auto flex h-full w-[285px] flex-col items-center justify-center">
             <Info
-              img={'/img/sad-smile-2.png'}
+              img={'img/sad-smile-2.png'}
               title="У вас нет заказов"
               text="Оформите хотя бы один заказ"
               alt="Грустный смайл"

@@ -24,7 +24,7 @@ export default function Home({
         showThumbs={false}
         dynamicHeight
         showStatus={false}
-        className="mb-10 cursor-pointer"
+        className="mb-10 hidden cursor-pointer sm:block"
         transitionTime={500}
       >
         <div>

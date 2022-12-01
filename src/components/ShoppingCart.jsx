@@ -38,9 +38,7 @@ export default function ShoppingCart({
         {!shoppingCart.length ? (
           <div className="flex h-full flex-col items-center justify-center">
             <Info
-              img={
-                isOrderComplete ? '/img/success-order.png' : '/img/basket.png'
-              }
+              img={isOrderComplete ? 'img/success-order.png' : 'img/basket.png'}
               title={isOrderComplete ? 'Заказ оформлен!' : 'Корзина пустая'}
               text={
                 isOrderComplete

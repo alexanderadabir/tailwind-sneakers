@@ -33,7 +33,7 @@ export default function Header({ onToggleVisibilityShoppingCart }) {
           <div className="flex flex-col items-center gap-3 sm:flex-row">
             <img
               className="hidden transition-transform duration-700 ease-in-out group-hover:rotate-[360deg] sm:block"
-              src="/img/logo.png"
+              src="img/logo.png"
               alt="Интернет-магазин Sneakers"
             />
 

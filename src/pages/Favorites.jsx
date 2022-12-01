@@ -16,7 +16,7 @@ export default function Favorites({ onFavoriteItem, onAddItem, items }) {
         {!items.length ? (
           <div className="mx-auto flex h-full w-[285px] flex-col items-center justify-center">
             <Info
-              img={'/img/sad-smile.png'}
+              img={'img/sad-smile.png'}
               title="Закладок нет"
               text="Вы ничего не добавляли в закладки"
               alt="Грустный смайл"
