@@ -1,6 +1,8 @@
 import { v4 as uuid } from 'uuid'
 import { CiSearch } from 'react-icons/ci'
 import { IoIosClose } from 'react-icons/io'
+import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
+import { Carousel } from 'react-responsive-carousel'
 
 import Card from '../components/Card'
 
@@ -13,6 +15,29 @@ export default function Home({
 }) {
   return (
     <main className="p-12">
+      <Carousel
+        autoFocus
+        interval={5000}
+        infiniteLoop
+        emulateTouch
+        autoPlay
+        showThumbs={false}
+        dynamicHeight
+        showStatus={false}
+        className="mb-10 cursor-pointer"
+        transitionTime={500}
+      >
+        <div>
+          <img src="img/slider-img-1.png" />
+        </div>
+        <div>
+          <img src="img/slider-img-1.png" />
+        </div>
+        <div>
+          <img src="img/slider-img-1.png" />
+        </div>
+      </Carousel>
+
       <section>
         <div className="mb-16 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
           {!!searchValue.length ? (
